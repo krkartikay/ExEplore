@@ -64,6 +64,13 @@ def login():
 				session["type"] = "user";
 		return redirect(url_for("profile", user_id = session["user_id"]))
 
+@app.route("/logout/")
+def logout():
+    session.pop("roll_number", None)
+    session.pop("user_id", None)
+    session.pop("logged_in", False)
+    return redirect(url_for("home_page"))
+
 @app.route("/profile/<int:user_id>")
 def profile(user_id):
 	user = User.query.filter_by(user_id = user_id).first()
