@@ -3,13 +3,20 @@
         <title>LEADERBOARD</title>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script>
-$(function(){
-    console.log("ready");
+function reload(){
     $.ajax({
         url: "/api/leaderboard",
         type: "GET",
         success: function(response){
             console.log(response);
+            $("#tb1").remove();
+            $("body").append("<table id=\"tb1\">\
+                <tr>\
+                <th>Rollno</th>\
+                <th>Total Score</th>\
+                </tr >\
+                </table>\
+                ");
             response['games'].forEach(element => {
                $("#tb1 tr").append("<th>"+element+"</th>");
             });
@@ -26,7 +33,11 @@ $(function(){
             });
         }
     });
-});
+}
+
+setInterval(() => {
+    reload();
+}, 1000);
         </script>
     </head>
     <body>
