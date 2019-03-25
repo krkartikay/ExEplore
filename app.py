@@ -7,9 +7,13 @@ from models.GameFeature import *
 from passlib.hash import sha256_crypt
 
 @app.route("/")
-def home_page():
+def welcome():
+	return render_template("index.html")
+
+@app.route("/dashboard")
+def homepage():
 	user = User.query.filter_by(user_id = 1).first()
-	return render_template("index.html", user = user)
+	return render_template("dashboard.html",user = user)
 
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
@@ -62,7 +66,7 @@ def login():
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
 				session["type"] = "user";
-		return redirect(url_for("profile", user_id = session["user_id"]))
+		return redirect(url_for("homepage"))
 
 @app.route("/logout/")
 def logout():
@@ -77,9 +81,28 @@ def profile(user_id):
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)
 
-@app.route("/leaderboard/")
+@app.route("/api/leaderboard/")
 def leaderboard():
-	return render_template("index.html")
+	# highscores = Game.query.all()
+	finaldata = list()
+	data = dict()
+	with db.engine.connect() as con:
+		topusers = con.execute("select user_id, sum(high_score/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
+		users = con.execute("select games.user_id, roll_number , game_name, high_score/game_high_score as relative from games natural join game_features natural join users")
+		rollnos = dict()
+		for userid, rollno, game, relative in users:
+			if userid not in data:
+				data[userid] = {}
+			data[userid][game] = relative
+			rollnos[userid] = rollno
+		for user, total in topusers:
+			finaldata.append((user, total, data[user]))
+		games = con.execute("select game_name from game_features")
+	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata}) #render_template("")
+
+@app.route("/leaderboard/")
+def leaderboard_page():
+	return render_template("leaderboard.html")
 
 @app.route("/game/<int:game_id>")
 def game(game_id):
