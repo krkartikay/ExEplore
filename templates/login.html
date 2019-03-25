@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block title %}User Login Page{% endblock %}
+
+{% block content %}
+<form method="post" class="form-horizontal">
+    <div class="form-group row">
+        <label class="control-label col-sm-3" for="roll_number">Roll Number</label>
+        <div class="col-sm-9">
+            <input type="text" name="roll_number" placeholder="Enter Roll Number"><br>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="control-label col-sm-3" for="password">Password</label>
+        <div class="col-sm-9">
+            <input type="password" name="password" placeholder="Enter Password"><br>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2">
+            <input type="submit" value="Login" class="form-control btn btn-primary">
+        </div>
+    </div>
+</form>
+{% endblock %}
