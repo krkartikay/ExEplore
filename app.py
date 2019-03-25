@@ -29,7 +29,7 @@ def register():
 			if not dig.isdigit():
 				flash("Invalid Phone number!")
 				return redirect(url_for("register"))
-		user = User(roll_number = roll_number,
+		user = User (roll_number = roll_number,
 					password = hashed_password,
 					phone_number = phone_number,
 					first_name = first_name,
@@ -64,24 +64,17 @@ def login():
 				session["type"] = "user";
 		return redirect(url_for("profile", user_id = session["user_id"]))
 
-@app.route("/leaderboard/")
-def leaderboard():
-	return
-
 @app.route("/profile/<int:user_id>")
 def profile(user_id):
 	user = User.query.filter_by(user_id = user_id).first()
-	return render_template("profile.html", user = user)
+	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
+	return render_template("profile.html", user = user, record = record)
 
 @app.route("/leaderboard/")
 def leaderboard():
-	return render_template("index.html", user=user)
-
-@app.route("/profile/")
-def profile():
-	return render_template("index.html", user=user)
+	return render_template("index.html")
 
 @app.route("/game/<int:game_id>")
 def game(game_id):
-	game_feature = GameFeature.query.filter_by(game_id=game_id).first()
-	return render_template("game"+str(game_id)+".html", game_feature=game_feature)
+	game_feature = GameFeature.query.filter_by(game_id = game_id).first()
+	return render_template("game" + str(game_id) + ".html", game_feature = game_feature)

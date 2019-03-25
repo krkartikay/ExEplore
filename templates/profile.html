@@ -4,5 +4,8 @@
 
 {% block content %}
 	{{ user.roll_number }}<br>
-	{{ user.first_name }}
-{% endblock %}
+	{{ user.first_name }}<br>
+	{% for game_record in record %}
+		{{ game_record.game_f.game_name }} {{ game_record.high_score }}
+	{% endfor %}
+{% endblock %} 
