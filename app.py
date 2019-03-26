@@ -5,12 +5,24 @@ from models.User import *
 from models.Game import *
 from models.GameFeature import *
 from passlib.hash import sha256_crypt
+from functools import wraps
+import os
+
+def authorise(f):
+	@wraps(f)
+	def decorated_f(*args, **kwargs):
+		if "user_id" in session and session["user_id"] != None:
+			return f(*args, **kwargs)
+		else:
+			abort(401)
+	return decorated_f
 
 @app.route("/")
 def welcome():
 	return render_template("index.html")
 
 @app.route("/dashboard")
+@authorise
 def dashboard():
 	user = User.query.filter_by(user_id = session['user_id']).first()
 	games = GameFeature.query.all()
@@ -70,6 +82,7 @@ def login():
 		return redirect(url_for("dashboard"))
 
 @app.route("/logout/")
+@authorise
 def logout():
     session.pop("roll_number", None)
     session.pop("user_id", None)
@@ -77,12 +90,14 @@ def logout():
     return redirect("/")
 
 @app.route("/profile/<int:user_id>")
+@authorise
 def profile(user_id):
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)
 	
 @app.route("/api/leaderboard/")
+@authorise
 def leaderboard():
 	# highscores = Game.query.all()
 	finaldata = list()
@@ -102,12 +117,14 @@ def leaderboard():
 	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata}) #render_template("") 
 
 @app.route("/leaderboard/")
+@authorise
 def leaderboard_page():
 	if "sid" in session:
 		session.pop("sid") 
 	return render_template("leaderboard.html")
 
 @app.route("/api/getsid")
+@authorise
 def get_sid():
 	if "sid" in session:
 		return jsonify({"sid": session['sid']})
@@ -115,7 +132,8 @@ def get_sid():
 		return jsonify({"sid": None})
 
 @app.route("/game/<int:user_id>/<int:game_id>")
-def game(user_id ,  game_id ):
+@authorise
+def game(user_id,  game_id):
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
 	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
@@ -127,13 +145,18 @@ def game(user_id ,  game_id ):
 					)
 		db.session.add(game)
 		db.session.commit()
+	token = os.urandom(16)
+	token = base64.b64encode(token)
+	token = token.encode()
 	session["sid"]=game.s_id
+	session["token"] = token
 	print(session["sid"])
 	# print game.s_id, game.user_id, game.game_id
-	return render_template("game"+str(game.game_id)+".html", game=game)
+	return render_template("game"+str(game.game_id)+".html", game=game, token = token)
 
 
 @app.route("/api/newscore/<int:s_id>", methods=["POST"])
+@authorise
 def new_score(s_id):
 	# print s_id
 	game = Game.query.filter_by(s_id=s_id).first()
