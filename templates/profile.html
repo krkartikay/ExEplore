@@ -172,11 +172,12 @@
 </style>
 <section id="team" class="pb-5">
 	<div class="container">
-		<h5 class="section-title h1">{{user.roll_number}} {{user.first_name}} {{user.last_name}}</h5>
+		<h1 class="section-title h1" style="font-size: 5em;">{{user.roll_number}} {{user.first_name}} {{user.last_name}}</h1>
+		<h5 class="section-title h1">High Scores</h5>
 		<div class="row">
 			<!-- Team member -->
 			{% for game_record in record %}
-			<div class="col-xs-12 col-sm-6 col-md-4">
+			<!-- <div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
 					<div class="mainflip">
 						<div class="frontside">
@@ -198,6 +199,15 @@
 							</div>
 						</div>
 					</div>
+				</div>
+			</div> -->
+			<div
+				style="margin: 50px; height: 300px; width: 400px; background-color: #fff; box-shadow: #000 0px 0px 21px 6px; border-radius: 20px;">
+				<div style="font-size: 3em; position: relative; top: 220px;">
+					<center>{{game_record.game_f.game_name}}</center>
+				</div>
+				<div style="font-size: 5em; position: relative;">
+					<center>{{game_record.high_score}}</center>
 				</div>
 			</div>
 			{% endfor %}
