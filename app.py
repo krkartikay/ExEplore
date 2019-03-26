@@ -74,7 +74,7 @@ def logout():
     session.pop("roll_number", None)
     session.pop("user_id", None)
     session.pop("logged_in", False)
-    return redirect(url_for("home_page"))
+    return redirect("/")
 
 @app.route("/profile/<int:user_id>")
 def profile(user_id):
