@@ -60,7 +60,10 @@ def register():
 @app.route("/login/", methods = ["GET", "POST"])
 def login():
 	if request.method == "GET":
-		return render_template("login.html")
+		if "user_id" in session:
+			return redirect(url_for("dashboard"))
+		else:
+			return render_template("login.html")
 	else:
 		roll_number = request.form["roll_number"]
 		password = request.form["password"]
@@ -72,10 +75,10 @@ def login():
 			password_correct = sha256_crypt.verify(password, user.password)
 			if not(password_correct):
 				flash("Wrong password entered!")
-				return redirect(url_for("userlogin"))
+				return redirect(url_for("login"))
 			else:
 				flash("Logged in successfully:)")
-				session["roll_number"] = roll_number
+				session["roll_number"] = user.roll_number
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
 				session["type"] = "user";
