@@ -1,1403 +1,166 @@
-<style>
-    h1 {
-        font-family: monospace;
-    }
-
-    body {
-        background-color: #00bfff;
-    }
-
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-font-smoothing: antialiased !important;
-        -o-font-smoothing: antialiased !important;
-        text-rendering: optimizeLegibility !important;
-    }
-
-    body {
-        font-family: "soleil", "roboto", sans-serif;
-        overflow-x: hidden;
-        background-color: #f1f1f1;
-        color: #040404;
-    }
-
-    .justify-center {
-        justify-content: center;
-    }
-
-    .menu-icon {
-        flex-grow: 1;
-        padding: 0 58px;
-        border-left: 1px solid #fff;
-        border-right: 1px solid #fff;
-        border-bottom: 1px solid #fff;
-        background-color: #fff;
-        z-index: 2;
-    }
-
-    .flex {
-        display: flex;
-    }
-
-    .column {
-        flex-direction: column;
-    }
-
-    .search-bar {
-        padding: 40px 10vw 0;
-    }
-
-    .search {
-        border: 0;
-        padding: 8px 20px;
-        font-size: 18px;
-        font-family: "soleil", "roboto", sans-serif;
-        border: 1px solid #bdbbbb;
-    }
-
-    .active {
-        background-color: #eeeeee !important;
-        border-left: 1px solid #e2e2e2 !important;
-        border-right: 1px solid #e2e2e2 !important;
-        border-bottom: 1px solid #e2e2e2 !important;
-    }
-
-    .nav {
-        align-items: center;
-        color: #040404;
-        font-size: 22px;
-        font-weight: 500;
-        justify-content: space-between;
-        background-color: #ffffff;
-        padding: 0 10vw;
-        -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-        -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-    }
-
-    .menu-block {
-        margin-left: -1px;
-    }
-
-    .menu-block,
-    .user-block {
-        position: relative;
-    }
-
-    .pointer {
-        cursor: pointer;
-    }
-
-    .user-container {
-        padding: 10px 15px;
-        border-left: 1px solid #ffffff;
-        border-right: 1px solid #ffffff;
-        border-top: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
-        background-color: #ffffff;
-        z-index: 2;
-        overflow-x: hidden;
-    }
-
-    .user-border {
-        height: 5px;
-        flex-grow: 1;
-        width: 100%;
-        top: -8px;
-        left: 0px;
-        z-index: 3;
-    }
-
-    .absolute {
-        position: absolute;
-    }
-
-    .relative {
-        position: relative;
-    }
-
-    .user-menu {
-        right: 0;
-        top: -62px;
-        z-index: 1;
-    }
-
-    .menu-link-icon {
-        margin-right: 8px;
-    }
-
-    .menu-link-notification {
-        border-radius: 100%;
-        height: 16px;
-        width: 16px;
-        color: #ffffff;
-        font-size: 10px;
-        top: 8px;
-        left: 13px;
-        padding-right: 1px;
-    }
-
-    .dropup-icon,
-    .dropdown-icon {
-        margin-left: 10px;
-    }
-
-    .bright-blue {
-        background-color: #482255;
-    }
-
-    .messages-notification {
-        border-radius: 100%;
-        height: 20px;
-        width: 20px;
-        color: #ffffff;
-        text-align: center;
-        font-size: 12px;
-        top: 14px;
-        left: 5px;
-    }
-
-    .icon {
-        width: 70px;
-        height: 70px;
-        padding: 22px;
-    }
-
-    .user-info {
-        margin-left: 15px;
-    }
-
-    .user-username {
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .user-score {
-        font-size: 14px;
-        color: #989898;
-        font-weight: 300;
-        margin-top: -3px;
-    }
-
-    .shadow {
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
-
-    .wrap {
-        flex-wrap: wrap;
-    }
-
-    .grow {
-        flex-grow: 1;
-    }
-
-    .leaderboard {
-        padding: 40px 10vw;
-    }
-
-    .leaderboard-header {
-        border-radius: 4px 4px 0 0;
-    }
-
-    .footer-btn {
-        padding: 8px 12px;
-        margin: 0 15px;
-        background-color: #fff;
-        border-radius: 4px;
-        color: #482255;
-        border: 1px solid #482255;
-    }
-
-    .leaderboard-footer {
-        padding: 20px 3vw;
-        background-color: #482255;
-        border: 1px solid #0196c1;
-        color: #fff;
-    }
-
-    .leaderboard-row {
-        flex-grow: 1;
-        justify-content: space-between;
-        background-color: #ffffff;
-        padding: 10px 3vw;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-    }
-
-    .row-caller {
-        align-items: center;
-    }
-
-    .row-user {
-        margin-left: 30px;
-        width: 185px;
-    }
-
-    .row-user--header {
-        width: 155px !important;
-    }
-
-    .row-position {
-        width: 55px;
-        text-align: center;
-    }
-
-    .row-calls {
-        width: 55px;
-        text-align: right;
-    }
-
-    .leaderboard-header>.leaderboard-row:first-of-type {
-        border-radius: 4px 4px 0 0 !important;
-    }
-
-    .leaderboard-header>.leaderboard-row {
-        background-color: #482255;
-        color: #ffffff;
-        border-left: 1px solid #0196c1;
-        border-bottom: 1px solid #0196c1;
-        border-right: 1px solid #0196c1;
-    }
-
-    .leaderboard-row:last-of-type {
-        border-radius: 0 0 4px 4px;
-    }
-
-    .align-center {
-        align-items: center;
-    }
-
-    .row-collapse {
-        flex-grow: 1;
-        justify-content: space-around;
-    }
-
-    .row-alt {
-        background-color: #f2f2f2;
-    }
-
-    .row-button {
-        padding: 12px 40px 10px 40px;
-        color: #080808;
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        background-color: #ffffff;
-    }
-
-    .table-tab:hover,
-    .row-button:hover {
-        background-color: #f2f2f2;
-    }
-
-    .row-button--active {
-        border-right: 1px solid #0196c1;
-        border-left: 1px solid #0196c1;
-        border-top: 1px solid #0196c1;
-    }
-
-    .filter-row {
-        padding: 0;
-    }
-
-    .table-tab {
-        padding: 10px;
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        background-color: #ffffff;
-    }
-
-    .filter-by {
-        border-bottom: 1px solid #0196c1;
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-    .row-button--active,
-    .tab-active {
-        background-color: #482255;
-        color: #ffffff;
-        border-left: 1px solid #0196c1;
-        border-top: 1px solid #0196c1;
-        border-right: 1px solid #0196c1;
-    }
-
-    .row-button--active:hover,
-    .tab-active:hover {
-        background-color: #20add6;
-    }
-
-    .row--header {
-        padding: 20px 3vw;
-    }
-
-    .row-rank--header,
-    .row-team--header,
-    .row-rank,
-    .row-team {
-        width: 16.67%;
-    }
-
-    .avatar {
-        border-radius: 100%;
-        width: 60px;
-        height: 60px;
-    }
-
-    .wordmark {
-        height: 65px;
-        margin: 8px 0;
-        cursor: pointer;
-    }
-
-    .content {
-        min-height: 100vh;
-    }
-
-    footer {
-        background-color: #482255;
-        padding: 25px 200px;
-        color: #ffffff;
-    }
-
-    .nav-link {
-        background-color: #eee;
-        font-size: 18px;
-        font-weight: 300;
-        color: #4a4a4a;
-        padding: 10px 25px 10px 20px;
-        border-left: 1px solid #e2e2e2;
-        border-right: 1px solid #e2e2e2;
-        border-bottom: 1px solid #e2e2e2;
-        position: relative;
-        letter-spacing: -0.5px;
-        z-index: 1;
-    }
-
-    .nav-link:hover {
-        background-color: #c7c7c7;
-        border-left: 1px solid #bdbdbd;
-        border-right: 1px solid #bdbdbd;
-        border-bottom: 1px solid #bdbdbd;
-    }
-
-    .nav-links {
-        position: absolute;
-        background-color: #eee;
-        left: 0;
-        top: -62px;
-        width: 100%;
-    }
-
-    @media (max-width: 1050px) {
-
-        .row-rank--header,
-        .row-team--header {
-            display: none;
-        }
-
-        .row-collapse {
-            flex-direction: column;
-        }
-
-        .row-caller {
-            margin-bottom: -37px;
-            align-items: flex-start;
-        }
-
-        .row-rank,
-        .row-team {
-            width: 275px;
-            padding-left: 90px;
-            font-size: 12px;
-        }
-
-        .wordmark {
-            height: 40px;
-        }
-
-        .nav {
-            padding: 0 10vw;
-        }
-    }
-
-    @media (max-width: 800px) {
-        .row-button:last-of-type {
-            border-right: 0;
-        }
-
-        .filter-by {
-            flex-direction: column;
-        }
-
-        .table-tab {
-            border-top: 1px solid #e2e2e2;
-            border-left: 0px;
-        }
-
-        .tab-active {
-            border-top: 1px solid #0196c1;
-        }
-
-        .row-button {
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .user-container {
-            padding: 4px 15px;
-        }
-
-        .user-menu {
-            top: -96px;
-        }
-
-        .dropdown-icon,
-        .dropup-icon,
-        .user-info {
-            display: none;
-        }
-
-        .nav {
-            height: 70px;
-        }
-
-        .menu-icon {
-            height: 70px;
-            width: 82px;
-            padding: 23px;
-        }
-
-        .nav-link {
-            border: 1px solid #e2e2e2;
-            padding: 8px 25px;
-        }
-
-        .active-icon {
-            background-color: #eee;
-            -webkit-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-            -moz-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-            box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-        }
-    }
-
-    .animate-border {
-        animation: animate-border 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    .remove-border {
-        animation: remove-border 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    @keyframes animate-border {
-        0% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(7px);
-        }
-    }
-
-    @keyframes remove-border {
-        0% {
-            transform: translateY(7px);
-        }
-
-        100% {
-            transform: translateY(0px);
-        }
-    }
-
-    .menu-slide-up {
-        animation: menu-slide-up 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    .menu-slide-down {
-        animation: menu-slide-down 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    @keyframes menu-slide-down {
-        0% {
-            transform: translateY(0px);
-        }
-
-        100% {
-            transform: translateY(144px);
-        }
-    }
-
-    @keyframes menu-slide-up {
-        0% {
-            transform: translateY(144px);
-        }
-
-        100% {
-            transform: translateY(0px);
-        }
-    }
-
-    h1 {
-        font-family: monospace;
-    }
-
-    body {
-        background-color: #00bfff;
-    }
-
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased !important;
-        -moz-font-smoothing: antialiased !important;
-        -o-font-smoothing: antialiased !important;
-        text-rendering: optimizeLegibility !important;
-    }
-
-    body {
-        font-family: "soleil", "roboto", sans-serif;
-        overflow-x: hidden;
-        background-color: #f1f1f1;
-        color: #040404;
-    }
-
-    .justify-center {
-        justify-content: center;
-    }
-
-    .menu-icon {
-        flex-grow: 1;
-        padding: 0 58px;
-        border-left: 1px solid #fff;
-        border-right: 1px solid #fff;
-        border-bottom: 1px solid #fff;
-        background-color: #fff;
-        z-index: 2;
-    }
-
-    .flex {
-        display: flex;
-    }
-
-    .column {
-        flex-direction: column;
-    }
-
-    .search-bar {
-        padding: 40px 10vw 0;
-    }
-
-    .search {
-        border: 0;
-        padding: 8px 20px;
-        font-size: 18px;
-        font-family: "soleil", "roboto", sans-serif;
-        border: 1px solid #bdbbbb;
-    }
-
-    .active {
-        background-color: #eeeeee !important;
-        border-left: 1px solid #e2e2e2 !important;
-        border-right: 1px solid #e2e2e2 !important;
-        border-bottom: 1px solid #e2e2e2 !important;
-    }
-
-    .nav {
-        align-items: center;
-        color: #040404;
-        font-size: 22px;
-        font-weight: 500;
-        justify-content: space-between;
-        background-color: #ffffff;
-        padding: 0 10vw;
-        -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-        -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-        box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16);
-    }
-
-    .menu-block {
-        margin-left: -1px;
-    }
-
-    .menu-block,
-    .user-block {
-        position: relative;
-    }
-
-    .pointer {
-        cursor: pointer;
-    }
-
-    .user-container {
-        padding: 10px 15px;
-        border-left: 1px solid #ffffff;
-        border-right: 1px solid #ffffff;
-        border-top: 1px solid #ffffff;
-        border-bottom: 1px solid #ffffff;
-        background-color: #ffffff;
-        z-index: 2;
-        overflow-x: hidden;
-    }
-
-    .user-border {
-        height: 5px;
-        flex-grow: 1;
-        width: 100%;
-        top: -8px;
-        left: 0px;
-        z-index: 3;
-    }
-
-    .absolute {
-        position: absolute;
-    }
-
-    .relative {
-        position: relative;
-    }
-
-    .user-menu {
-        right: 0;
-        top: -62px;
-        z-index: 1;
-    }
-
-    .menu-link-icon {
-        margin-right: 8px;
-    }
-
-    .menu-link-notification {
-        border-radius: 100%;
-        height: 16px;
-        width: 16px;
-        color: #ffffff;
-        font-size: 10px;
-        top: 8px;
-        left: 13px;
-        padding-right: 1px;
-    }
-
-    .dropup-icon,
-    .dropdown-icon {
-        margin-left: 10px;
-    }
-
-    .bright-blue {
-        background-color: #482255;
-    }
-
-    .messages-notification {
-        border-radius: 100%;
-        height: 20px;
-        width: 20px;
-        color: #ffffff;
-        text-align: center;
-        font-size: 12px;
-        top: 14px;
-        left: 5px;
-    }
-
-    .icon {
-        width: 70px;
-        height: 70px;
-        padding: 22px;
-    }
-
-    .user-info {
-        margin-left: 15px;
-    }
-
-    .user-username {
-        font-size: 18px;
-        font-weight: 500;
-    }
-
-    .user-score {
-        font-size: 14px;
-        color: #989898;
-        font-weight: 300;
-        margin-top: -3px;
-    }
-
-    .shadow {
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
-            0 1px 2px rgba(0, 0, 0, 0.24);
-        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        -ms-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    }
-
-    .wrap {
-        flex-wrap: wrap;
-    }
-
-    .grow {
-        flex-grow: 1;
-    }
-
-    .leaderboard {
-        padding: 40px 10vw;
-    }
-
-    .leaderboard-header {
-        border-radius: 4px 4px 0 0;
-    }
-
-    .footer-btn {
-        padding: 8px 12px;
-        margin: 0 15px;
-        background-color: #fff;
-        border-radius: 4px;
-        color: #482255;
-        border: 1px solid #3498db;
-    }
-
-    .leaderboard-footer {
-        padding: 20px 3vw;
-        background-color: #482255;
-        border: 1px solid #0196c1;
-        color: #fff;
-    }
-
-    .leaderboard-row {
-        flex-grow: 1;
-        justify-content: space-between;
-        background-color: #ffffff;
-        padding: 10px 3vw;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-    }
-
-    .row-caller {
-        align-items: center;
-    }
-
-    .row-user {
-        margin-left: 30px;
-        width: 185px;
-    }
-
-    .row-user--header {
-        width: 275px;
-    }
-
-    .row-position {
-        width: 55px;
-        text-align: center;
-    }
-
-    .row-calls {
-        width: 55px;
-        text-align: right;
-    }
-
-    .leaderboard-header>.leaderboard-row:first-of-type {
-        border-radius: 4px 4px 0 0 !important;
-    }
-
-    .leaderboard-header>.leaderboard-row {
-        background-color: #482255;
-        color: #ffffff;
-        border-left: 1px solid #0196c1;
-        border-bottom: 1px solid #0196c1;
-        border-right: 1px solid #0196c1;
-    }
-
-    .leaderboard-row:last-of-type {
-        border-radius: 0 0 4px 4px;
-    }
-
-    .align-center {
-        align-items: center;
-    }
-
-    .row-collapse {
-        flex-grow: 1;
-        justify-content: space-around;
-    }
-
-    .row-alt {
-        background-color: #f2f2f2;
-    }
-
-    .row-button {
-        padding: 12px 40px 10px 40px;
-        color: #080808;
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        background-color: #ffffff;
-    }
-
-    .table-tab:hover,
-    .row-button:hover {
-        background-color: #f2f2f2;
-    }
-
-    .row-button--active {
-        border-right: 1px solid #0196c1;
-        border-left: 1px solid #0196c1;
-        border-top: 1px solid #0196c1;
-    }
-
-    .filter-row {
-        padding: 0;
-    }
-
-    .table-tab {
-        padding: 10px;
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-        background-color: #ffffff;
-    }
-
-    .filter-by {
-        border-bottom: 1px solid #0196c1;
-        background-color: rgba(0, 0, 0, 0);
-    }
-
-    .row-button--active,
-    .tab-active {
-        background-color: #482255;
-        color: #ffffff;
-        border-left: 1px solid #0196c1;
-        border-top: 1px solid #0196c1;
-        border-right: 1px solid #0196c1;
-    }
-
-    .row-button--active:hover,
-    .tab-active:hover {
-        background-color: #20add6;
-    }
-
-    .row--header {
-        padding: 20px 3vw;
-    }
-
-    .row-rank--header,
-    .row-team--header,
-    .row-rank,
-    .row-team {
-        width: 16.67%;
-    }
-
-    .avatar {
-        border-radius: 100%;
-        width: 60px;
-        height: 60px;
-    }
-
-    .wordmark {
-        height: 65px;
-        margin: 8px 0;
-        cursor: pointer;
-    }
-
-    .content {
-        min-height: 100vh;
-    }
-
-    footer {
-        background-color: #482255;
-        padding: 25px 200px;
-        color: #ffffff;
-    }
-
-    .nav-link {
-        background-color: #eee;
-        font-size: 18px;
-        font-weight: 300;
-        color: #4a4a4a;
-        padding: 10px 25px 10px 20px;
-        border-left: 1px solid #e2e2e2;
-        border-right: 1px solid #e2e2e2;
-        border-bottom: 1px solid #e2e2e2;
-        position: relative;
-        letter-spacing: -0.5px;
-        z-index: 1;
-    }
-
-    .nav-link:hover {
-        background-color: #c7c7c7;
-        border-left: 1px solid #bdbdbd;
-        border-right: 1px solid #bdbdbd;
-        border-bottom: 1px solid #bdbdbd;
-    }
-
-    .nav-links {
-        position: absolute;
-        background-color: #eee;
-        left: 0;
-        top: -62px;
-        width: 100%;
-    }
-
-    @media (max-width: 1050px) {
-
-        .row-rank--header,
-        .row-team--header {
-            display: none;
-        }
-
-        .row-collapse {
-            flex-direction: column;
-        }
-
-        .row-caller {
-            margin-bottom: -37px;
-            align-items: flex-start;
-        }
-
-        .row-rank,
-        .row-team {
-            width: 275px;
-            padding-left: 90px;
-            font-size: 12px;
-        }
-
-        .wordmark {
-            height: 40px;
-        }
-
-        .nav {
-            padding: 0 10vw;
-        }
-    }
-
-    @media (max-width: 800px) {
-        .row-button:last-of-type {
-            border-right: 0;
-        }
-
-        .filter-by {
-            flex-direction: column;
-        }
-
-        .table-tab {
-            border-top: 1px solid #e2e2e2;
-            border-left: 0px;
-        }
-
-        .tab-active {
-            border-top: 1px solid #0196c1;
-        }
-
-        .row-button {
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .user-container {
-            padding: 4px 15px;
-        }
-
-        .user-menu {
-            top: -96px;
-        }
-
-        .dropdown-icon,
-        .dropup-icon,
-        .user-info {
-            display: none;
-        }
-
-        .nav {
-            height: 70px;
-        }
-
-        .menu-icon {
-            height: 70px;
-            width: 82px;
-            padding: 23px;
-        }
-
-        .nav-link {
-            border: 1px solid #e2e2e2;
-            padding: 8px 25px;
-        }
-
-        .active-icon {
-            background-color: #eee;
-            -webkit-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-            -moz-box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-            box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
-        }
-    }
-
-    .animate-border {
-        animation: animate-border 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    .remove-border {
-        animation: remove-border 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    @keyframes animate-border {
-        0% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(7px);
-        }
-    }
-
-    @keyframes remove-border {
-        0% {
-            transform: translateY(7px);
-        }
-
-        100% {
-            transform: translateY(0px);
-        }
-    }
-
-    .menu-slide-up {
-        animation: menu-slide-up 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    .menu-slide-down {
-        animation: menu-slide-down 0.3s ease-in-out 1;
-        animation-fill-mode: forwards;
-    }
-
-    @keyframes menu-slide-down {
-        0% {
-            transform: translateY(0px);
-        }
-
-        100% {
-            transform: translateY(144px);
-        }
-    }
-
-    @keyframes menu-slide-up {
-        0% {
-            transform: translateY(144px);
-        }
-
-        100% {
-            transform: translateY(0px);
-        }
-    }
-</style>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-
-        var border = $('#personal-border');
-        var userMenu = $('.user-menu');
-        var userBlock = $('.user-block');
-
-        $('.dropup-icon').hide();
-
-        $('.menu-icon').click(function () {
-            if ($('.nav-links').hasClass('menu-slide-down')) {
-                $('.nav-links').removeClass('menu-slide-down');
-                $('.nav-links').addClass('menu-slide-up');
-            } else {
-                $('.nav-links').removeClass('menu-slide-up');
-                $('.nav-links').addClass('menu-slide-down');
-            }
-            $(this).toggleClass('active');
-            $('.menu-icon').toggleClass('active-icon');
-        });
-
-        userBlock.click(function () {
-            $('.dropup-icon').toggle();
-            $('.dropdown-icon').toggle();
-            $('.user-container').toggleClass('active');
-            if (userMenu.hasClass('menu-slide-down')) {
-                userMenu.removeClass('menu-slide-down');
-                userMenu.addClass('menu-slide-up');
-            } else {
-                userMenu.removeClass('menu-slide-up');
-                userMenu.addClass('menu-slide-down');
-            }
-        });
-
-        userBlock.mouseenter(function () {
-            border.removeClass('remove-border');
-            border.addClass('animate-border');
-        });
-
-        userBlock.mouseleave(function () {
-            border.removeClass('animate-border');
-            border.addClass('remove-border');
-        });
-
-        $('.menu-icon').mouseenter(function () {
-            $('#menu-border').removeClass('remove-border');
-            $('#menu-border').addClass('animate-border');
-        });
-
-        $('.menu-icon').mouseleave(function () {
-            $('#menu-border').removeClass('animate-border');
-            $('#menu-border').addClass('remove-border');
-        });
-    });
-
-
-</script>
-
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-
-        var border = $('#personal-border');
-        var userMenu = $('.user-menu');
-        var userBlock = $('.user-block');
-
-        $('.dropup-icon').hide();
-
-        $('.menu-icon').click(function () {
-            if ($('.nav-links').hasClass('menu-slide-down')) {
-                $('.nav-links').removeClass('menu-slide-down');
-                $('.nav-links').addClass('menu-slide-up');
-            } else {
-                $('.nav-links').removeClass('menu-slide-up');
-                $('.nav-links').addClass('menu-slide-down');
-            }
-            $(this).toggleClass('active');
-            $('.menu-icon').toggleClass('active-icon');
-        });
-
-        userBlock.click(function () {
-            $('.dropup-icon').toggle();
-            $('.dropdown-icon').toggle();
-            $('.user-container').toggleClass('active');
-            if (userMenu.hasClass('menu-slide-down')) {
-                userMenu.removeClass('menu-slide-down');
-                userMenu.addClass('menu-slide-up');
-            } else {
-                userMenu.removeClass('menu-slide-up');
-                userMenu.addClass('menu-slide-down');
-            }
-        });
-
-        userBlock.mouseenter(function () {
-            border.removeClass('remove-border');
-            border.addClass('animate-border');
-        });
-
-        userBlock.mouseleave(function () {
-            border.removeClass('animate-border');
-            border.addClass('remove-border');
-        });
-
-        $('.menu-icon').mouseenter(function () {
-            $('#menu-border').removeClass('remove-border');
-            $('#menu-border').addClass('animate-border');
-        });
-
-        $('.menu-icon').mouseleave(function () {
-            $('#menu-border').removeClass('animate-border');
-            $('#menu-border').addClass('remove-border');
-        });
-    });
-
-
-</script>
-<script>
-    function reload() {
-        $.ajax({
-            url: "/api/leaderboard",
-            type: "GET",
-            success: function (response) {
-                // console.log(response);
-                // $("#tb1").remove();
-                // $("#card").append("<table id=\"tb1\"  class=\"table table-dark\">\
-                //     <tr>\
-                //     <th>Rollno</th>\
-                //     </tr >\
-                //     </table>\
-                //     ");
-                // response['games'].forEach(element => {
-                //     $("#tb1 tr").append("<th>" + element + "</th>");
-                // });
-                // $("#tb1 tr").append("<th>Total Score</th>");
-                // response['leader_data'].forEach(data => {
-                //     var userid = data[0];
-                //     var rollno = response['rollnos'][userid];
-                //     var rowdata = "";
-                //     rowdata += "<td>" + rollno + "</td>";
-                //     response['games'].forEach(gamename => {
-                //         rowdata += "<td>" + data[2][gamename] + "</td>";
-                //     });
-                //     rowdata += "<td>" + data[1] + "</td>";
-                //     $("#tb1").append("<tr>" + rowdata + "</tr>");
-                // });
-                $("#data").empty();
-                for (let i = 0; i < response["leader_data"].length; i++) {
-                    const element = response["leader_data"][i];
-                    var user_id = element[0];
-                    var total_score = element[1];
-                    var user_roll_number = response["rollnos"][user_id];
-                    // console.log(i + 1, user_roll_number, total_score);
-                    var format = '\n<div class="leaderboard-body flex column grow">\n                    <div class="leaderboard-row flex align-center">\n                        <div class="row-position">POSITION</div>\n                        <div class="row-collapse flex align-center">\n                            <div class="row-caller flex">\n                                <div style="height: 55px;"></div>\n                                <div class="row-user">ROLLNUMBER</div>\n                            </div>\n                        </div>\n                        <div class="row-calls">TOTSCORE</div>\n                    </div>\n                </div>\n';
-                    format = format.replace("ROLLNUMBER", user_roll_number);
-                    format = format.replace("POSITION", i + 1);
-                    format = format.replace("TOTSCORE", total_score);
-                    // console.log(format);
-                    $("#data").append(format);
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">WebSiteName</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span
+                            class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Page 1-1</a></li>
+                        <li><a href="#">Page 1-2</a></li>
+                        <li><a href="#">Page 1-3</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">Page 2</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            </ul>
+        </div>
+    </nav>
+        <script>
+        function reload() {
+            $.ajax({
+                url: "/api/leaderboard",
+                type: "GET",
+                success: function (response) {
+                    // console.log(response);
+                    $("#tb1").remove();
+                    $("#card").append("<table id=\"tb1\"  class=\"table table-dark\">\
+                <tr>\
+                <th>Rollno</th>\
+                </tr >\
+                </table>\
+                ");
+                    response['games'].forEach(element => {
+                        $("#tb1 tr").append("<th>" + element + "</th>");
+                    });
+                    $("#tb1 tr").append("<th>Total Score</th>");
+                    response['leader_data'].forEach(data => {
+                        var userid = data[0];
+                        var rollno = response['rollnos'][userid];
+                        var rowdata = "";
+                        rowdata += "<td>" + rollno + "</td>";
+                        response['games'].forEach(gamename => {
+                            rowdata += "<td>" + data[2][gamename] + "</td>";
+                        });
+                        rowdata += "<td>" + data[1] + "</td>";
+                        $("#tb1").append("<tr>" + rowdata + "</tr>");
+                    });
                 }
-            }
-        });
-    };
-    setInterval(() => {
-        reload();
-    }, 1000);
-</script>
+            });
+        }
+        setInterval(() => {
+            reload();
+        }, 1000);
+    </script>
 
-<nav class="nav flex">
+    <style>
+        html {
+            font-size: 10px;
+        }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-style: normal;
+            color: #fff;
+            /* background: #fff; */
+            -webkit-font-smoothing: antialiased;
+        }
 
-    <div class="user-navigation flex">
-        <div class="user-block pointer">
-            <!-- <div id="personal-border" class="user-border flex absolute bright-blue"></div>
-            <div class="user-container flex align-center relative">
-                <p class="messages-notification absolute bright-blue">2</p>
-                <img class="avatar" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/225473/berner_avatar.png" />
-                <div class=String(txt)"user-info flex column justify-center">
-                    <p class="user-username">BernNotice</p>
-                    <p class="user-score">2016 Total Calls</p>
-                </div>
-                <svg class="dropdown-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 10l5 5 5-5z" />
-                    <path d="M0 0h24v24H0z" fill="none" />
-                </svg>
-                <svg class="dropup-icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path d="M7 14l5-5 5 5z" />
-                    <path d="M0 0h24v24H0z" fill="none" />
-                </svg>
-            </div> -->
-            <!-- <div class="user-menu flex column absolute">
-                <a class="nav-link flex align-center pointer"> <svg class="menu-link-icon" fill="#4a4a4a" height="24"
-                        viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                    </svg>Your Team</a>
-                <a class=" nav-link flex align-center pointer">
-                    <span class="menu-link-notification absolute flex bright-blue justify-center">2</span>
-                    <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M19 3H4.99c-1.11 0-1.98.89-1.98 2L3 19c0 1.1.88 2 1.99 2H19c1.1 0 2-.9 2-2V5c0-1.11-.9-2-2-2zm0 12h-4c0 1.66-1.35 3-3 3s-3-1.34-3-3H4.99V5H19v10z" />
-                        <path d="M0 0h24v24H0V0z" fill="none" />
-                    </svg> Messages</a>
-                <a class="nav-link flex align-center pointer">
-                    <svg class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M13 3h-2v10h2V3zm4.83 2.17l-1.42 1.42C17.99 7.86 19 9.81 19 12c0 3.87-3.13 7-7 7s-7-3.13-7-7c0-2.19 1.01-4.14 2.58-5.42L6.17 5.17C4.23 6.82 3 9.26 3 12c0 4.97 4.03 9 9 9s9-4.03 9-9c0-2.74-1.23-5.18-3.17-6.83z" />
-                    </svg> Sign Out
-                </a>
-            </div> -->
-        </div>
-        <div class="menu-block pointer flex column">
-            <div id="menu-border" class="user-border flex absolute bright-blue"></div>
-            <div class="menu-icon flex drop-down align-center justify-center">Leaderboard</div>
-            <div class="nav-links flex column">
-                <!-- <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24"
-                        viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z" />
-                        <path d="M0 0h24v24H0z" fill="none" />
-                    </svg>Leaderboard</a> -->
-                <!-- <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24"
-                        viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path
-                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z" />
-                    </svg> Help</a> -->
-                <!-- <a class="nav-link flex align-center pointer"><svg class="menu-link-icon" fill="#4a4a4a" height="24"
-                        viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z" />
-                        <path d="M0 0h24v24H0z" fill="none" />
-                    </svg> Candidates</a> -->
-            </div>
-        </div>
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: normal;
+            letter-spacing: .02em;
+            color: #fff;
+        }
 
+        h1 {
+            font-size: 7.2rem;
+        }
+
+        h2 {
+            font-size: 3.9rem;
+        }
+
+        h3 {
+            font-size: 3.4rem;
+        }
+
+        h4 {
+            font-size: 2.9rem;
+        }
+
+        h5 {
+            font-size: 2.3rem;
+        }
+
+        h6 {
+            font-size: 1.9rem;
+        }
+
+        p {
+            font-size: 1.8rem;
+            line-height: 1.7em;
+        }
+
+        a,
+        a:hover,
+        a:focus {
+            cursor: pointer;
+            -webkit-transition: all 300ms ease;
+            -o-transition: all 300ms ease;
+            transition: all 300ms ease;
+            text-decoration: none;
+            color: #fff;
+        }
+
+        #card {
+            width: 60%;
+            margin: auto;
+            padding: 100px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+        }
+    </style>
+
+</head>
+
+<body background="/static/assets/img/background2.jpg">
+   <div id="card">
+
+        <h2>LEADERBOARD</h2>
+        <br><br>
+
+        <table id="tb1" class="table table-dark">
+            <tr>
+                <th>Rollno</th>
+
+            </tr>
+        </table>
     </div>
-</nav>
+</body>
 
-<div class="content">
-
-    <div class="search-bar flex grow">
-        <input class="search flex grow" placeholder="Search by roll number" />
-    </div>
-
-    <div class="leaderboard flex column wrap">
-        <div class="leaderboard-table flex column">
-            <div class="leaderboard-header flex column grow">
-
-                <!-- <div class="filter-by flex grow wrap">
-                        <div class="time-filter flex grow">
-                            <div class="row-button pointer row-button--active align-center">Today</div>
-                            <div class="row-button pointer align-center">This week</div>
-                            <div class="row-button pointer align-center">All-time</div>
-                        </div>
-                        <div class="subject-filter flex grow">
-                            <div class="table-tab pointer flex grow justify-center align-center tab-active">
-                                <svg class="menu-link-icon" fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                                </svg>
-                                Users</div>
-                            <div class="table-tab pointer flex grow justify-center align-center"> <svg
-                                    class="menu-link-icon" fill="#4a4a4a" height="24" viewBox="0 0 24 24" width="24"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                reload();   <path
-                                        d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z" />
-                                </svg>
-                            </div>
-                        </div>
-                    </div> -->
-
-                <div class="leaderboard-row flex align-center row--header" style="border-radius: 0 !important;">
-                    <div class="row-position">Position</div>
-                    <div class="row-collapse flex align-center">
-                        <div class="row-user--header">Roll Number</div>
-                        <!-- <div class="row-team--header">Team</div>
-                        <div class="row-rank--header">Rank</div> -->
-                    </div>
-                    <div class="row-calls">Total Score</div>
-                </div>
-            </div>
-
-            <div id="data">
-                <script>
-                    reload();
-                </script>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-<footer class="flex column align-center justify-center">
-    <p>Developed by Team .EXE</p>
-    <!-- <img src="https://d397eo7kv84tb5.cloudfront.net/static/images/misc/NotTheBillionairesWhite.png" /> -->
-</footer>
+</html>
