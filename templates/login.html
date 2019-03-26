@@ -1,4 +1,5 @@
-{% extends "layout.html" %} {% block title %}Login Page{% endblock %} {% block content %}
+{% extends "layout.html" %} {% block title %}Login Page{% endblock %} {% block head %}
+<link href="{{url_for('static',filename='css/login.css')}}" rel="stylesheet"> {% endblock %} {% block content %}
 <div class="container">
     <div class="d-flex justify-content-center h-100">
         <div class="card">
