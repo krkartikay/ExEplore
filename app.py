@@ -81,6 +81,7 @@ def profile(user_id):
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)
+	
 @app.route("/api/leaderboard/")
 def leaderboard():
 	# highscores = Game.query.all()
@@ -103,6 +104,7 @@ def leaderboard():
 @app.route("/leaderboard/")
 def leaderboard_page():
 	return render_template("leaderboard.html")
+
 @app.route("/game/<int:user_id>/<int:game_id>")
 def game(user_id ,  game_id ):
 	if len(Game.query.filter(Game.user_id == user_id and Game.game_id == game_id).all())!=0:
