@@ -102,11 +102,23 @@ def leaderboard():
 
 @app.route("/leaderboard/")
 def leaderboard_page():
+	# if "sid" in session:
+	# 	session.pop("sid") 
 	return render_template("leaderboard.html")
+
+@app.route("/api/getsid")
+def get_sid():
+	if "sid" in session:
+		return jsonify({"sid": session['sid']})
+	else:
+		return jsonify({"sid": None})
+
 @app.route("/game/<int:user_id>/<int:game_id>")
 def game(user_id ,  game_id ):
-	if len(Game.query.filter(Game.user_id == user_id and Game.game_id == game_id).all())!=0:
-		game = Game.query.filter(Game.user_id == user_id and Game.game_id == game_id).first()
+	# print user_id,game_id
+	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
+	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
+		game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
 	else:
 		game = Game(user_id = user_id,
 					game_id = game_id,
@@ -114,7 +126,9 @@ def game(user_id ,  game_id ):
 					)
 		db.session.add(game)
 		db.session.commit()
-	print game.s_id, game.user_id, game.game_id
+	session["sid"]=game.s_id
+	print(session["sid"])
+	# print game.s_id, game.user_id, game.game_id
 	return render_template("game"+str(game.game_id)+".html", game=game)
 
 
