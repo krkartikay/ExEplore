@@ -22,8 +22,7 @@ function Pipe() {
     fill(255);
     if (this.highlight) {
       fill(255, 0, 0);
-      alert("you lost");
-      window.location.replace("index.html");
+      // window.location.replace("index.html");
     }
     rect(0, this.y, this.left, this.w);
     rect(this.right, this.y, width - this.right,this.w );

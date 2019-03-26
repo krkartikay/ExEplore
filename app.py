@@ -11,9 +11,10 @@ def welcome():
 	return render_template("index.html")
 
 @app.route("/dashboard")
-def homepage():
-	user = User.query.filter_by(user_id = 1).first()
-	return render_template("dashboard.html",user = user)
+def dashboard():
+	user = User.query.filter_by(user_id = session['user_id']).first()
+	games = GameFeature.query.all()
+	return render_template("dashboard.html", user = user, games = games)
 
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
@@ -66,7 +67,7 @@ def login():
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
 				session["type"] = "user";
-		return redirect(url_for("homepage"))
+		return redirect(url_for("dashboard"))
 
 @app.route("/logout/")
 def logout():
@@ -80,7 +81,6 @@ def profile(user_id):
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)
-
 @app.route("/api/leaderboard/")
 def leaderboard():
 	# highscores = Game.query.all()
@@ -98,13 +98,36 @@ def leaderboard():
 		for user, total in topusers:
 			finaldata.append((user, total, data[user]))
 		games = con.execute("select game_name from game_features")
-	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata}) #render_template("")
+	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata}) #render_template("") 
 
 @app.route("/leaderboard/")
 def leaderboard_page():
 	return render_template("leaderboard.html")
+@app.route("/game/<int:user_id>/<int:game_id>")
+def game(user_id ,  game_id ):
+	if len(Game.query.filter(Game.user_id == user_id and Game.game_id == game_id).all())!=0:
+		game = Game.query.filter(Game.user_id == user_id and Game.game_id == game_id).first()
+	else:
+		game = Game(user_id = user_id,
+					game_id = game_id,
+					high_score = 0
+					)
+		db.session.add(game)
+		db.session.commit()
+	print game.s_id, game.user_id, game.game_id
+	return render_template("game"+str(game.game_id)+".html", game=game)
 
-@app.route("/game/<int:game_id>")
-def game(game_id):
-	game_feature = GameFeature.query.filter_by(game_id = game_id).first()
-	return render_template("game" + str(game_id) + ".html", game_feature = game_feature)
+
+@app.route("/api/newscore/<int:s_id>", methods=["POST"])
+def new_score(s_id):
+	# print s_id
+	game = Game.query.filter_by(s_id=s_id).first()
+	# print game.s_id
+	# print request.json['score']
+	game_features = GameFeature.query.filter_by(game_id= game.game_id).first()
+	if game.high_score < request.json['score']:
+		game.high_score = request.json['score']
+	if game_features.game_high_score<request.json['score']:
+		game_features.game_high_score = request.json['score']
+	db.session.commit()
+	return jsonify({'success': True})

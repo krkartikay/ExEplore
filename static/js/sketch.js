@@ -25,7 +25,10 @@ function setup() {
     frameRate(60)
 }
 
+var running = true;
+
 function draw() {
+    if(!running) return;
     background(0);
     fill(0, 102, 153);
     text(score, 10, 60);
@@ -34,12 +37,21 @@ function draw() {
         pipes[i].update();
 
         if (pipes[i].hits(player)) {
-            console.log("HIT");
-            alert("you lost");
-            window.location.replace("index.html");
-            ended(score);
-
-        }
+            console.log(score);
+            var data={'score' : score};
+            // data['score']=score;
+            $.ajax({
+                type: "POST",
+                url: "/api/newscore/"+sid,
+                data: JSON.stringify(data),
+                contentType: 'application/json;charset=UTF-8',
+                success: function (result) {
+                    console.log(result);
+                    window.location.href = "http://127.0.0.1:5000/";
+                }
+            });
+            running = false;
+        };
 
         if (pipes[i].offscreen()) {
             pipes.splice(i, 1);
