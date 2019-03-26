@@ -114,7 +114,7 @@ def game(user_id ,  game_id ):
 					)
 		db.session.add(game)
 		db.session.commit()
-	print game.s_id, game.user_id, game.game_id
+	# print game.s_id, game.user_id, game.game_id
 	return render_template("game"+str(game.game_id)+".html", game=game)
 
 

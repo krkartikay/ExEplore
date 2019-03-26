@@ -2,51 +2,150 @@
     <head>
         <title>LEADERBOARD</title>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script>
 function reload(){
     $.ajax({
         url: "/api/leaderboard",
         type: "GET",
         success: function(response){
-            console.log(response);
+            // console.log(response);
             $("#tb1").remove();
-            $("body").append("<table id=\"tb1\">\
+            $("#card").append("<table id=\"tb1\"  class=\"table table-dark\">\
                 <tr>\
                 <th>Rollno</th>\
-                <th>Total Score</th>\
                 </tr >\
                 </table>\
                 ");
             response['games'].forEach(element => {
                $("#tb1 tr").append("<th>"+element+"</th>");
             });
+            $("#tb1 tr").append("<th>Total Score</th>");
             response['leader_data'].forEach(data => {
                 var userid = data[0];
                 var rollno = response['rollnos'][userid];
                 var rowdata = "";
                 rowdata += "<td>" + rollno + "</td>";
-                rowdata += "<td>" + data[1] + "</td>";
                 response['games'].forEach(gamename => {
                     rowdata += "<td>" + data[2][gamename] + "</td>";
                 });
+                rowdata += "<td>" + data[1] + "</td>";
                 $("#tb1").append("<tr>"+rowdata+"</tr>");
             });
         }
     });
 }
 
+
+
 setInterval(() => {
     reload();
 }, 1000);
         </script>
+
+<style>
+html
+{
+    font-size: 10px;
+}
+
+body
+{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    margin: 100px;
+    color: #fff;
+    /* background: #fff; */
+
+    -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6
+{
+    font-weight: normal;
+
+    letter-spacing: .02em;
+
+    color: #fff;
+}
+
+h1
+{
+    font-size: 7.2rem;
+}
+
+h2
+{
+    font-size: 3.9rem;
+}
+
+h3
+{
+    font-size: 3.4rem;
+}
+
+h4
+{
+    font-size: 2.9rem;
+}
+
+h5
+{
+    font-size: 2.3rem;
+}
+
+h6
+{
+    font-size: 1.9rem;
+}
+
+p
+{
+    font-size: 1.8rem;
+    line-height: 1.7em;
+}
+
+a,
+a:hover,
+a:focus
+{
+    cursor: pointer;
+    -webkit-transition: all 300ms ease;
+         -o-transition: all 300ms ease;
+            transition: all 300ms ease;
+    text-decoration: none;
+
+    color: #fff;
+}
+
+#card {
+    width: 60%;
+    margin: auto;
+    padding: 100px;
+    background-color:rgba(0, 0, 0, 0.7);
+    border-radius: 20px;
+}
+
+</style>
+
     </head>
-    <body>
-        <h1>LEADERBOARD</h1>
-        <table id="tb1">
-            <tr>
-                <th>Rollno</th>
-                <th>Total Score</th>
-            </tr>
-        </table>
+    <body background="/static/assets/img/background2.jpg">
+        <div id="card">
+            <h2>LEADERBOARD</h2>
+            <br><br>
+            <table id="tb1" class="table table-dark">
+                <tr>
+                    <th>Rollno</th>
+                    
+                </tr>
+            </table>
+        </div>
     </body>
 </html>
