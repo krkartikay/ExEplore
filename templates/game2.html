@@ -1,25 +1,64 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | BreakOut</title>
-    <link rel="shortcut icon" href="../../static/TemplateData/favicon.ico">
-    <link rel="stylesheet" href="../../static/TemplateData/style.css">
-    <script src="../../static/TemplateData/UnityProgress.js"></script>
-    <script src="../../static/Build/UnityLoader.js"></script>
-    <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/Build/webgl2.json", {onProgress: UnityProgress});
-    </script>
-  </head>
-  <body>
-    <div class="webgl-content">
-      <div id="gameContainer" style="width: 800px; height: 600px"></div>
-      <div class="footer">
-        <div class="webgl-logo"></div>
-        <div class="fullscreen" onclick="gameInstance.SetFullscreen(1)"></div>
-        <div class="title">BreakOut</div>
-      </div>
-    </div>
-  </body>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="../../static/2048/style.css">
+	<link rel="stylesheet" type="text/css" href="../../static/vendor/bootstrap/css/bootstrap.css">
+	<title>2048</title>
+</head>
+<script>var sid ={{ game.s_id}}</script>
+<body style="font-family: sans-serif;">
+	<div class="contain">
+		<div class="leftpane">
+			<h2 id="t"></h2>
+			<h2 id="tScore"></h2>
+		</div>
+
+		<div class="middlepane" id="canvas-block">
+			<h2 id="s">2048</h2>
+			<canvas id="mycanvas" width="500" height="500"></canvas>
+			<div id="victory-notification">
+				<div id="victory-message">
+					<h1>GAME OVER!</h1>
+					<h3>Click 'Play Again' to restart the game.</h3>
+				</div>
+			</div>
+		</div>
+
+		<div class="rightpane">
+			<h2 id="maxMath"></h2><br>
+			<div id="sc">
+				<h2 id="score">Score : 0</h2>
+			</div>
+			<h3 id="pa"></h3>
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModalM">HELP</button>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModalM" role="dialog">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Instructions</h4>
+				</div>
+				<div class="modal-body">
+					<p>The game's objective is to slide numbered tiles on a grid to combine them to create a tile with the number
+						2048. However you can keep playing the game creating tiles with larger numbers.</p>
+					<p>Tiles will slide smoothly when a player moves them using the four arrow keys.</p>
+					<p> Every turn, a new tile will randomly appear in an empty spot on the board with a value of either 2 or 4.
+					</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../static/2048/script.js"></script>
+	<script type="text/javascript" src="../../static/vendor/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../../static/vendor/bootstrap/js/bootstrap.js"></script>
+</body>
+
 </html>

@@ -1,0 +1,159 @@
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+    display: block;
+    margin: 0 auto;
+    z-index: -1;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: lightgrey;
+}
+
+.contain {
+  width: 100%;
+  height: 100%;
+}
+
+.leftpane {
+    width: 30%;
+    height: 100%;
+    float: left;
+    background-size: cover;
+    background-image: url('../images/images.jpg');
+    background-color: rgba(128, 128, 128, 0.5);
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.middlepane {
+    width: 50%;
+    height: 100%;
+    float: left;
+    background-size: cover;
+    background-image: url('../images/4.png');
+    background-color: lightblue;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.rightpane {
+  width: 20%;
+  height: 100%;
+  position: relative;
+  float: right;
+  background-size: cover;
+  background-image: url('../images/background.jpg');
+  background-color: rgba(255, 179, 179, 0.5);
+  border-collapse: collapse;
+  text-align: center;
+}
+
+#s {
+  color: rgba(160,82,50,1);
+}
+
+#t {
+  margin-top: 70px;
+  color: black;
+  text-align: center;
+}
+
+#tScore {
+  margin-top: 20px;
+  color: black;
+  text-align: center;
+}
+
+#sc {
+	margin-top: 50px;
+	color: rgba(255, 0, 0, 0.8);
+}
+
+#maxMath {
+	color: rgba(255,127,80,0.9);
+}
+
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+}
+
+#myCarousel {
+	margin-top: 50px;
+}
+
+#exe {
+	color: rgba(124, 10, 22, 1);
+	cursor: pointer;
+}
+
+#pa {
+  color: red;
+}
+
+#exe:hover, #pa:hover {
+	text-decoration: underline;
+}
+
+.item , #pa {
+	cursor: pointer;
+}
+
+#victory-notification {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 20%;
+  margin-left: 33%;
+  margin-top: 10%;
+}
+
+#victory-message {
+  margin: 15% auto 0 42%;
+  width: 25em;
+  padding: 1em;
+  background: grey;
+}
+
+#victory-message > h1{
+  text-align: center;
+  font: bold;
+  color: white;
+}
+
+#victory-message > h3 {
+  color: white;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+@media (max-width:   800px)  { 
+  .leftpane{
+    display: block;
+    float: none;
+    width: 100%;
+  }
+  .rightpane {
+    display: block;
+    float: none;
+    width: 100%;
+    text-align: center;
+  }
+  .middlepane {
+    display: block;
+    float: none;
+    width: 100%;
+  }
+}
+
+#tScore {
+  margin-top: 50px;
+}
+

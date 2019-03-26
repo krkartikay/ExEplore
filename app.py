@@ -103,8 +103,8 @@ def leaderboard():
 
 @app.route("/leaderboard/")
 def leaderboard_page():
-	# if "sid" in session:
-	# 	session.pop("sid") 
+	if "sid" in session:
+		session.pop("sid") 
 	return render_template("leaderboard.html")
 
 @app.route("/api/getsid")
