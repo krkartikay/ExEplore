@@ -4,12 +4,17 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <title>Unity WebGL Player | BreakOut</title>
-    <link rel="shortcut icon" href="../../static/TemplateData/favicon.ico">
-    <link rel="stylesheet" href="../../static/TemplateData/style.css">
-    <script src="../../static/TemplateData/UnityProgress.js"></script>
-    <script src="../../static/Build/UnityLoader.js"></script>
+    <link rel="shortcut icon" href="../../static/Breakout3D/TemplateData/favicon.ico">
+    <link rel="stylesheet" href="../../static/Breakout3D/TemplateData/style.css">
+    <script src="../../static/Breakout3D/TemplateData/UnityProgress.js"></script>
+    <script src="../../static/Breakout3D/Build/UnityLoader.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/Build/webgl2.json", {onProgress: UnityProgress});
+      var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/Breakout3D/Build/webgl2.json", {onProgress: UnityProgress});
+      setInterval(() => {
+        console.log("yo");
+        var tokens = "{{ token }}";
+      gameInstance.SendMessage("GameManger", "ctrl", tokens);
+      }, 1000);
     </script>
   </head>
   <body>
