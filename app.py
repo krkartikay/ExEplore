@@ -198,6 +198,7 @@ def game(game_id):
 	session["sid"]=game.s_id
 	session["token"] = token
 	print(session["token"])
+	print(session["sid"])
 	# print game.s_id, game.user_id, game.game_id
 	return render_template("game"+str(game.game_id)+".html", game=game, token = token)
 
@@ -205,10 +206,12 @@ def game(game_id):
 @app.route("/api/newscore", methods=["POST"])
 @authorise
 def new_score():
+	print(session["sid"])
 	try:
 		tokens = request.json['tokens']
 	except:
-		tokens = request.data['tokens']
+		print(request.data)
+		tokens = request.form['tokens']
 	if tokens != session["token"]:
 		abort(401)
 	s_id = session["sid"]
@@ -217,7 +220,7 @@ def new_score():
 	try:
 		user_score = request.json['score']
 	except:
-		user_score = request.data['score']
+		user_score = int(float(request.form['score']))
 		
 	if game.high_score < user_score:
 		game.high_score = user_score
