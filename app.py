@@ -22,7 +22,7 @@ def authorise(f):
 def welcome():
 	return render_template("index.html")
 
-@app.route("/dashboard")
+@app.route("/dashboard/")
 @authorise
 def dashboard():
 	user = User.query.filter_by(user_id = session['user_id']).first()
@@ -32,7 +32,11 @@ def dashboard():
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
 	if request.method == "GET":
-		return render_template("register.html")
+		if "user_id" in session:
+			flash("You are already logged in!")
+			return redirect(url_for("dashboard"))
+		else:
+			return render_template("register.html")
 	else:
 		roll_number = request.form["roll_number"]
 		password = request.form["password"]
@@ -40,59 +44,71 @@ def register():
 		first_name = request.form["first_name"]
 		last_name = request.form["last_name"]
 		phone_number = request.form["phone_number"]
-		if len(phone_number) != 10:
-			flash("Invalid Phone number!")
-			return redirect(url_for("register"))
-		for dig in phone_number:
-			if not dig.isdigit():
-				flash("Invalid Phone number!")
+		user = User.query.filter_by(roll_number = roll_number).first()
+		if not user:
+			if len(phone_number) != 10:
+				flash("Phone number must be of 10 digits!")
 				return redirect(url_for("register"))
-		user = User (roll_number = roll_number,
-					password = hashed_password,
-					phone_number = phone_number,
-					first_name = first_name,
-					last_name = last_name)
-		db.session.add(user)
-		db.session.commit()
-		db.session.close()
-		flash("Successfully registered!")
-		return redirect(url_for("login"))
+			for dig in phone_number:
+				if not dig.isdigit():
+					flash("Invalid Phone number!")
+					return redirect(url_for("register"))
+			user = User (roll_number = roll_number,
+						password = hashed_password,
+						phone_number = phone_number,
+						first_name = first_name,
+						last_name = last_name)
+			db.session.add(user)
+			db.session.commit()
+			db.session.close()
+			flash("Successfully registered!")
+			return redirect(url_for("login"))
+		else:
+			flash("This roll number is already registered!")
+			return redirect(url_for("register"))
 
 @app.route("/login/", methods = ["GET", "POST"])
 def login():
 	if request.method == "GET":
-		return render_template("login.html")
+		if "user_id" in session:
+			flash("You are already logged in!")
+			return redirect(url_for("dashboard"))
+		else:
+			return render_template("login.html")
 	else:
 		roll_number = request.form["roll_number"]
 		password = request.form["password"]
 		user = User.query.filter_by(roll_number = roll_number).first()
-		if not(user):
+		if not user:
 			flash("This Roll Number doesn't exists!")
 			return redirect(url_for("login"))
 		else:
 			password_correct = sha256_crypt.verify(password, user.password)
 			if not(password_correct):
 				flash("Wrong password entered!")
-				return redirect(url_for("userlogin"))
+				return redirect(url_for("login"))
 			else:
 				flash("Logged in successfully:)")
-				session["roll_number"] = roll_number
+				session["roll_number"] = user.roll_number
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
 				session["type"] = "user";
+		flash("Successfully logged in!")
 		return redirect(url_for("dashboard"))
 
 @app.route("/logout/")
 @authorise
 def logout():
-    session.pop("roll_number", None)
-    session.pop("user_id", None)
-    session.pop("logged_in", False)
-    return redirect("/")
+	session.pop("roll_number", None)
+	session.pop("user_id", None)
+	session.pop("logged_in", False)
+	session.pop("type", None)
+	return redirect(url_for("welcome"))
 
-@app.route("/profile/<int:user_id>")
+@app.route("/profile/")
 @authorise
-def profile(user_id):
+def profile():
+	user_id = session["user_id"]
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)

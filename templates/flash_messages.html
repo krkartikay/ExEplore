@@ -1,0 +1,20 @@
+{% with messages = get_flashed_messages() %} {% if messages %}
+<style>
+    .flash-alerts {
+        position: absolute;
+        top: 0px;
+        left: 20%;
+        width: 60%;
+    }
+</style>
+<div class="flash-alerts">
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Alert! </strong> {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %} {% endwith %}

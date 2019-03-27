@@ -2,182 +2,181 @@
 <html lang="en">
 
 <head>
-	<title>Bootstrap Example</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
 
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div class="navbar-header">
-				<a class="navbar-brand" href="https://github.com/Teamexe">EXEplore</a>
-			</div>
-			<ul class="nav navbar-nav">
-				<li><a href="/dashboard">Dashboard</a></li>
-				<li><a href="/leaderboard">Leaderboard</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><a href="/profile/{{session['user_id']}}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-				<li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-			</ul>
-		</div>
-	</nav>
-	<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="https://github.com/Teamexe">EXEplore</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/leaderboard">Leaderboard</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="/profile/{{session['user_id']}}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-<!------ Include the above in your HEAD tag ---------->
+    <!------ Include the above in your HEAD tag ---------->
 
-<!-- Team -->
-<style>
-	/* FontAwesome for working BootSnippet :> */
-
-	@import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
-
-	body{
+    <!-- Team -->
+    <style>
+        /* FontAwesome for working BootSnippet :> */
+        
+        @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+        body {
             background-color: #080808;
-    }
-
-	#team {
-		background: #482255 !important;
-	}
-
-	.btn-primary:hover,
-	.btn-primary:focus {
-		background-color: #ffebff;
-		border-color: #ffebff;
-		box-shadow: none;
-		outline: none;
-	}
-
-	.btn-primary {
-		color: #fff;
-		background-color: #d9ebf4;
-		border-color: #d9ebf4;
-	}
-
-	section {
-		padding: 60px 0;
-	}
-
-	section .section-title {
-		text-align: center;
-		color: #d9ebf4;
-		margin-bottom: 50px;
-		text-transform: uppercase;
-	}
-
-	#team .card {
-		border: none;
-		background: #ffffff;
-	}
-
-	.image-flip:hover .backside,
-	.image-flip.hover .backside {
-		-webkit-transform: rotateY(0deg);
-		-moz-transform: rotateY(0deg);
-		-o-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		transform: rotateY(0deg);
-		border-radius: .25rem;
-	}
-
-	.image-flip:hover .frontside,
-	.image-flip.hover .frontside {
-		-webkit-transform: rotateY(180deg);
-		-moz-transform: rotateY(180deg);
-		-o-transform: rotateY(180deg);
-		transform: rotateY(180deg);
-	}
-
-	.mainflip {
-		-webkit-transition: 1s;
-		-webkit-transform-style: preserve-3d;
-		-ms-transition: 1s;
-		-moz-transition: 1s;
-		-moz-transform: perspective(1000px);
-		-moz-transform-style: preserve-3d;
-		-ms-transform-style: preserve-3d;
-		transition: 1s;
-		transform-style: preserve-3d;
-		position: relative;
-	}
-
-	.frontside {
-		position: relative;
-		-webkit-transform: rotateY(0deg);
-		-ms-transform: rotateY(0deg);
-		z-index: 2;
-		margin-bottom: 30px;
-	}
-
-	.backside {
-		position: absolute;
-		top: 0;
-		left: 0;
-		background: white;
-		-webkit-transform: rotateY(-180deg);
-		-moz-transform: rotateY(-180deg);
-		-o-transform: rotateY(-180deg);
-		-ms-transform: rotateY(-180deg);
-		transform: rotateY(-180deg);
-		-webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-		-moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-		box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
-	}
-
-	.frontside,
-	.backside {
-		-webkit-backface-visibility: hidden;
-		-moz-backface-visibility: hidden;
-		-ms-backface-visibility: hidden;
-		backface-visibility: hidden;
-		-webkit-transition: 1s;
-		-webkit-transform-style: preserve-3d;
-		-moz-transition: 1s;
-		-moz-transform-style: preserve-3d;
-		-o-transition: 1s;
-		-o-transform-style: preserve-3d;
-		-ms-transition: 1s;
-		-ms-transform-style: preserve-3d;
-		transition: 1s;
-		transform-style: preserve-3d;
-	}
-
-	.frontside .card,
-	.backside .card {
-		min-height: 312px;
-		min-width: 312px;
-	}
-
-	.backside .card a {
-		font-size: 18px;
-		color: #482255 !important;
-	}
-
-	.frontside .card .card-title,
-	.backside .card .card-title {
-		color: #482255 !important;
-	}
-
-	.frontside .card .card-body img {
-		width: 120px;
-		height: 120px;
-		border-radius: 50%;
-	}
-</style>
-<section id="team" class="pb-5">
-	<div class="container">
-		<h1 class="section-title h1" style="font-size: 5em;">{{user.roll_number}} {{user.first_name}} {{user.last_name}}</h1>
-		<h5 class="section-title h1">High Scores</h5>
-		<div class="row">
-			<!-- Team member -->
-			{% for game_record in record %}
-			<!-- <div class="col-xs-12 col-sm-6 col-md-4">
+        }
+        
+        #team {
+            background: #482255 !important;
+        }
+        
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #ffebff;
+            border-color: #ffebff;
+            box-shadow: none;
+            outline: none;
+        }
+        
+        .btn-primary {
+            color: #fff;
+            background-color: #d9ebf4;
+            border-color: #d9ebf4;
+        }
+        
+        section {
+            padding: 60px 0;
+        }
+        
+        section .section-title {
+            text-align: center;
+            color: #d9ebf4;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+        
+        #team .card {
+            border: none;
+            background: #ffffff;
+        }
+        
+        .image-flip:hover .backside,
+        .image-flip.hover .backside {
+            -webkit-transform: rotateY(0deg);
+            -moz-transform: rotateY(0deg);
+            -o-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+            border-radius: .25rem;
+        }
+        
+        .image-flip:hover .frontside,
+        .image-flip.hover .frontside {
+            -webkit-transform: rotateY(180deg);
+            -moz-transform: rotateY(180deg);
+            -o-transform: rotateY(180deg);
+            transform: rotateY(180deg);
+        }
+        
+        .mainflip {
+            -webkit-transition: 1s;
+            -webkit-transform-style: preserve-3d;
+            -ms-transition: 1s;
+            -moz-transition: 1s;
+            -moz-transform: perspective(1000px);
+            -moz-transform-style: preserve-3d;
+            -ms-transform-style: preserve-3d;
+            transition: 1s;
+            transform-style: preserve-3d;
+            position: relative;
+        }
+        
+        .frontside {
+            position: relative;
+            -webkit-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            z-index: 2;
+            margin-bottom: 30px;
+        }
+        
+        .backside {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: white;
+            -webkit-transform: rotateY(-180deg);
+            -moz-transform: rotateY(-180deg);
+            -o-transform: rotateY(-180deg);
+            -ms-transform: rotateY(-180deg);
+            transform: rotateY(-180deg);
+            -webkit-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+            -moz-box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+            box-shadow: 5px 7px 9px -4px rgb(158, 158, 158);
+        }
+        
+        .frontside,
+        .backside {
+            -webkit-backface-visibility: hidden;
+            -moz-backface-visibility: hidden;
+            -ms-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transition: 1s;
+            -webkit-transform-style: preserve-3d;
+            -moz-transition: 1s;
+            -moz-transform-style: preserve-3d;
+            -o-transition: 1s;
+            -o-transform-style: preserve-3d;
+            -ms-transition: 1s;
+            -ms-transform-style: preserve-3d;
+            transition: 1s;
+            transform-style: preserve-3d;
+        }
+        
+        .frontside .card,
+        .backside .card {
+            min-height: 312px;
+            min-width: 312px;
+        }
+        
+        .backside .card a {
+            font-size: 18px;
+            color: #482255 !important;
+        }
+        
+        .frontside .card .card-title,
+        .backside .card .card-title {
+            color: #482255 !important;
+        }
+        
+        .frontside .card .card-body img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+        }
+    </style>
+    <section id="team" class="pb-5">
+        <div class="container">
+            <h1 class="section-title h1" style="font-size: 5em;">{{user.roll_number}} {{user.first_name}} {{user.last_name}}</h1>
+            <h5 class="section-title h1">High Scores</h5>
+            <div class="row">
+                <!-- Team member -->
+                {% for game_record in record %}
+                <!-- <div class="col-xs-12 col-sm-6 col-md-4">
 				<div class="image-flip" ontouchstart="this.classList.toggle('hover');">
 					<div class="mainflip">
 						<div class="frontside">
@@ -201,31 +200,16 @@
 					</div>
 				</div>
 			</div> -->
-			<div
-				style="margin: 50px; height: 300px; width: 400px; background-color: #fff; box-shadow: #000 0px 0px 21px 6px; border-radius: 20px;">
-				<div style="font-size: 3em; position: relative; top: 220px;">
-					<center>{{game_record.game_f.game_name}}</center>
-				</div>
-				<div style="font-size: 5em; position: relative;">
-					<center>{{game_record.high_score}}</center>
-				</div>
-			</div>
-			{% endfor %}
-			<!-- ./Team member -->
-		</div>
-	</div>
-</section>
-<!-- Team -->
-
-<!-- {% extends "layout.html" %}
-
-{% block title %}Profile page{% endblock %}
-
-{% block content %}
-
-	{{ user.roll_number }}<br>
-	{{ user.first_name }}<br>
-	{% for game_record in record %}
-		{{ game_record.game_f.game_name }} {{ game_record.high_score }}
-	{% endfor %}
-{% endblock %} -->
+                <div style="margin: 50px; height: 300px; width: 400px; background-color: #fff; box-shadow: #000 0px 0px 21px 6px; border-radius: 20px;">
+                    <div style="font-size: 3em; position: relative; top: 220px;">
+                        <center>{{game_record.game_f.game_name}}</center>
+                    </div>
+                    <div style="font-size: 5em; position: relative;">
+                        <center>{{game_record.high_score}}</center>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- ./Team member -->
+            </div>
+        </div>
+    </section>

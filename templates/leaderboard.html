@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Bootstrap Example</title>
+    <title>Leaderboard</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
@@ -22,25 +22,27 @@
                 <li class="active"><a href="/leaderboard">Leaderboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ><a href="/profile/{{session['user_id']}}"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                <li ><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                <li><a href="/profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </div>
     </nav>
-        <script>
+    <script>
         function reload() {
             $.ajax({
                 url: "/api/leaderboard",
                 type: "GET",
-                success: function (response) {
+                success: function(response) {
                     // console.log(response);
                     $("#tb1").remove();
                     $("#card").append("<table id=\"tb1\"  class=\"table table-dark\">\
-                <tr>\
-                <th>Rollno</th>\
-                </tr >\
-                </table>\
-                ");
+                        <tr>\
+                        <th>Rank</th>\
+                        <th>Rollno</th>\
+                        </tr >\
+                        </table>\
+                    ");
+                    var pos = 1;
                     response['games'].forEach(element => {
                         $("#tb1 tr").append("<th>" + element + "</th>");
                     });
@@ -49,6 +51,8 @@
                         var userid = data[0];
                         var rollno = response['rollnos'][userid];
                         var rowdata = "";
+                        rowdata += "<td>" + pos + "</td>";
+                        pos += 1;
                         rowdata += "<td>" + rollno + "</td>";
                         response['games'].forEach(gamename => {
                             rowdata += "<td>" + data[2][gamename] + "</td>";
@@ -68,7 +72,7 @@
         html {
             font-size: 10px;
         }
-
+        
         body {
             font-family: 'Poppins', sans-serif;
             font-weight: 300;
@@ -77,7 +81,7 @@
             background: #080808;
             -webkit-font-smoothing: antialiased;
         }
-
+        
         h1,
         h2,
         h3,
@@ -88,36 +92,36 @@
             letter-spacing: .02em;
             color: #fff;
         }
-
+        
         h1 {
             font-size: 7.2rem;
         }
-
+        
         h2 {
             font-size: 3.9rem;
         }
-
+        
         h3 {
             font-size: 3.4rem;
         }
-
+        
         h4 {
             font-size: 2.9rem;
         }
-
+        
         h5 {
             font-size: 2.3rem;
         }
-
+        
         h6 {
             font-size: 1.9rem;
         }
-
+        
         p {
             font-size: 1.8rem;
             line-height: 1.7em;
         }
-
+        
         a,
         a:hover,
         a:focus {
@@ -128,7 +132,7 @@
             text-decoration: none;
             color: #fff;
         }
-
+        
         #card {
             width: 80%;
             margin: auto;
@@ -138,21 +142,20 @@
         }
     </style>
 
-</head>
+    </head>
 
-<body background="/static/assets/img/background2.jpg">
-   <div id="card">
+    <body background="/static/assets/img/background2.jpg">
+        <div id="card">
 
-        <h2>LEADERBOARD</h2>
-        <br><br>
+            <h2>LEADERBOARD</h2>
+            <br><br>
 
-        <table id="tb1" class="table table-dark">
-            <tr>
-                <th>Rollno</th>
-
-            </tr>
-        </table>
-    </div>
-</body>
+            <table id="tb1" class="table table-dark">
+                <script>
+                    reload();
+                </script>
+            </table>
+        </div>
+    </body>
 
 </html>
