@@ -29,7 +29,7 @@ def dashboard():
 	user = User.query.filter_by(user_id = session['user_id']).first()
 	games = GameFeature.query.all()
 	# print(session["start"])
-	return render_template("dashboard.html", user = user, games = games, start =session["start"])
+	return render_template("dashboard.html", user = user, games = games)
 
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
@@ -169,29 +169,21 @@ def leaderboard_page():
 		session.pop("sid") 
 	return render_template("leaderboard.html")
 
-# @app.route("/api/get_token")
-# @authorise
-# def get_token():
-# 	if "sid" in session:
-# 		return jsonify({"sid": session['sid']})
-# 	else:
-# 		return jsonify({"sid": None})
-
 @app.route("/game/<int:game_id>")
 @authorise
 def game(game_id):
 	user_id = session['user_id']
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
-	# if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
-	game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
-	# else:
-	# 	game = Game(user_id = user_id,
-	# 				game_id = game_id,
-	# 				high_score = 0
-	# 				)
-	# 	db.session.add(game)
-	# 	db.session.commit()
+	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
+		game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
+	else:
+		game = Game(user_id = user_id,
+					game_id = game_id,
+					high_score = 0
+					)
+		db.session.add(game)
+		db.session.commit()
 	token = os.urandom(16)
 	token = base64.b64encode(token)
 	token = token.decode()

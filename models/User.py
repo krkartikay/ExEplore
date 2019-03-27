@@ -8,4 +8,3 @@ class User(db.Model):
 	first_name = db.Column(db.String(255), nullable = False)
 	last_name = db.Column(db.String(255))
 	phone_number = db.Column(db.String(10), nullable = False)
-	start_time = db.Column(db.String(255), nullable = False)
