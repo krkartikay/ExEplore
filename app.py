@@ -6,7 +6,7 @@ from models.Game import *
 from models.GameFeature import *
 from passlib.hash import sha256_crypt
 from functools import wraps
-import os
+import os, base64
 
 def authorise(f):
 	@wraps(f)
@@ -52,12 +52,21 @@ def register():
 				if not dig.isdigit():
 					flash("Invalid Phone number!")
 					return redirect(url_for("register"))
-			user = User (roll_number = roll_number,
+			user = User(
+						roll_number = roll_number,
 						password = hashed_password,
 						phone_number = phone_number,
 						first_name = first_name,
-						last_name = last_name)
+						last_name = last_name
+					)
 			db.session.add(user)
+			for game in GameFeature.query.all():
+				user_game = Game(
+					user_id = user.user_id,
+					game_id = game.game_id,
+					high_score = 0
+				)
+				db.session.add(user_game)
 			db.session.commit()
 			db.session.close()
 			flash("Successfully registered!")
@@ -120,7 +129,7 @@ def leaderboard():
 	data = dict()
 	with db.engine.connect() as con:
 		topusers = con.execute("select user_id, sum(high_score/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
-		users = con.execute("select games.user_id, roll_number , game_name, high_score/game_high_score as relative from games natural join game_features natural join users")
+		users = con.execute("select games.user_id, roll_number , game_name, high_score/(game_high_score+1) as relative from games natural join game_features natural join users")
 		rollnos = dict()
 		for userid, rollno, game, relative in users:
 			if userid not in data:
@@ -147,29 +156,20 @@ def get_sid():
 	else:
 		return jsonify({"sid": None})
 
-@app.route("/game/<int:user_id>/<int:game_id>")
+@app.route("/game/<int:game_id>")
 @authorise
-def game(user_id,  game_id):
-	# print user_id,game_id
-	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
-	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
-		game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
-	else:
-		game = Game(user_id = user_id,
-					game_id = game_id,
-					high_score = 0
-					)
-		db.session.add(game)
-		db.session.commit()
+def game(game_id):
+	user_id = session["user_id"]
+	game = Game.query.filter_by(
+		user_id = user_id,
+		game_id = game_id
+	).first()
 	token = os.urandom(16)
 	token = base64.b64encode(token)
-	token = token.encode()
+	token = token.decode()
 	session["sid"]=game.s_id
 	session["token"] = token
-	print(session["sid"])
-	# print game.s_id, game.user_id, game.game_id
-	return render_template("game"+str(game.game_id)+".html", game=game, token = token)
-
+	return render_template("game" + str(game.game_id) + ".html", game = game, token = token)
 
 @app.route("/api/newscore/<int:s_id>", methods=["POST"])
 @authorise
