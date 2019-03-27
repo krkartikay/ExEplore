@@ -11,12 +11,13 @@
     <link href="{{url_for('static',filename='css/main.css')}}" rel="stylesheet">
     
     <!-- Bootstrap core JavaScript -->
+    <script>var sid = {{ game.s_id }}; console.log(sid);</script>
+    <script>var token = "{{ token }}"; console.log(token);</script>
     <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
     <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url_for('static',filename='js/sketch.js')}}"></script>
     <script src="{{url_for('static',filename='js/player.js')}}"></script>
     <script src="{{url_for('static',filename='js/pipe.js')}}"></script>
-    <script>var sid = {{ game.s_id }}</script>
 </head>
 
 <body>
