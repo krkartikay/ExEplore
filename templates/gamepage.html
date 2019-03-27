@@ -44,6 +44,10 @@
                 <li><a href="/leaderboard">Leaderboard</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <script>
+                    function timef(t){return Math.floor(t/60)+":"Math.floor(t%60);}
+                    var t = {{timer}}; setInterval(function () {t -= 1; $("#t").text(timef(t))}, 1000);</script>
+                <li><a>Time remaining: <span id="t">{{timer}}</span></a></li>
                 <li><a href="/profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>

@@ -23,6 +23,8 @@
             <li><a href="/leaderboard">Leaderboard</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
+            <script> function timef(t) { return ((t/3600<10)?"0":"") + Math.floor(t/3600) + ":" + ((Math.floor(t % 3600 / 60)<10)?"0":"") + Math.floor(t%3600 / 60) + ":" + ((t%60<10)?"0":"")+Math.floor(t % 60); } var t = {{ timer }}; function rt () { t -= 0.1; $("#t").text(timef(t)) }; setInterval(rt, 100);</script>
+            <li><a>Time remaining: <span id="t" style="color: #fff; font-size: 2em; vertical-align: top; margin-left:10px;"></span></a></li>
             <li><a href="/profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
         </ul>

@@ -11,7 +11,10 @@ import base64
 import datetime
 import time
 
-ALLOWED_TIME_SECONDS = 30
+ALLOWED_TIME_SECONDS = 3 * 60 * 60
+
+def get_time_rem():
+	return int(ALLOWED_TIME_SECONDS - (time.time() - session['time']))
 
 def authorise(f):
 	@wraps(f)
@@ -38,7 +41,7 @@ def dashboard():
 	user = User.query.filter_by(user_id = session['user_id']).first()
 	games = GameFeature.query.all()
 	# print(session["start"])
-	return render_template("dashboard.html", user = user, games = games)
+	return render_template("dashboard.html", user = user, games = games, timer=get_time_rem())
 
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
@@ -150,7 +153,7 @@ def profile():
 	user_id = session["user_id"]
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
-	return render_template("profile.html", user = user, record = record)
+	return render_template("profile.html", user=user, record=record, timer=get_time_rem())
 	
 @app.route("/api/leaderboard/")
 @authorise
@@ -182,7 +185,7 @@ def leaderboard():
 def leaderboard_page():
 	if "sid" in session:
 		session.pop("sid") 
-	return render_template("leaderboard.html")
+	return render_template("leaderboard.html", timer=get_time_rem())
 
 @app.route("/game_frame/<int:game_id>")
 @authorise
@@ -217,7 +220,7 @@ def game_frame(game_id):
 def game(game_id):
 	session['time_page'] = time.time()
 	name = GameFeature.query.filter_by(game_id=game_id).first().game_name
-	return render_template("gamepage.html", game_id=game_id, name=name)
+	return render_template("gamepage.html", game_id=game_id, name=name, timer=get_time_rem())
 
 @app.route("/api/newscore", methods=["POST"])
 @authorise
