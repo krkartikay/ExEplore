@@ -11,7 +11,7 @@ import base64
 import datetime
 import time
 
-ALLOWED_TIME_SECONDS = 3 * 60 * 60
+ALLOWED_TIME_SECONDS = 10 * 60
 
 def get_time_rem():
 	return int(ALLOWED_TIME_SECONDS - (time.time() - session['time']))
@@ -25,7 +25,8 @@ def authorise(f):
 				session['time'] = user.initial_login
 			if session['time'] != 0:
 				if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
-					abort(401, "TIME OVER")
+					session.pop("user_id")
+					abort(504)
 			return f(*args, **kwargs)
 		else:
 			abort(401)
@@ -156,7 +157,6 @@ def profile():
 	return render_template("profile.html", user=user, record=record, timer=get_time_rem())
 	
 @app.route("/api/leaderboard/")
-@authorise
 def leaderboard():
 	# highscores = Game.query.all()
 	finaldata = list()
@@ -178,14 +178,20 @@ def leaderboard():
 		for user, total in topusers:
 			finaldata.append((user, total, data[user]))
 		games = con.execute("select game_name from game_features")
-	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata}) #render_template("") 
+	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata},) #render_template("") 
 
 @app.route("/leaderboard/")
-@authorise
 def leaderboard_page():
-	if "sid" in session:
-		session.pop("sid") 
-	return render_template("leaderboard.html", timer=get_time_rem())
+	logged_in = True
+	if session['time'] != 0:
+		if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
+			logged_in = False
+	if 'user_id' not in session:
+		logged_in = False
+	elif session['user_id'] == None:
+		logged_in = False
+	print(logged_in)
+	return render_template("leaderboard.html", timer=get_time_rem(), logged_in = logged_in)
 
 @app.route("/game_frame/<int:game_id>")
 @authorise
@@ -225,7 +231,6 @@ def game(game_id):
 @app.route("/api/newscore", methods=["POST"])
 @authorise
 def new_score():
-	print(session["sid"])
 	try:
 		tokens = request.json['tokens']
 	except:
@@ -248,3 +253,8 @@ def new_score():
 	db.session.commit()
 	# session.pop("sid")
 	return jsonify({'success': True})
+
+
+@app.errorhandler(504)
+def page_not_found(e):
+    return render_template('timeout.html'), 504

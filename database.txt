@@ -24,7 +24,7 @@ foreign key(game_id) references game_features(game_id));
 
 insert into users(roll_number, password, first_name, last_name, phone_number) values('admin', '$5$rounds=535000$HMnXf5En.04mpgc8$MT3.2Lo8yr8OXGpcz3opnzao30dB96KvS6tzhwxPp5.', 'admin', 'admin', 'xxxxxxxxxx');
 
-insert into game_features(game_name, game_high_score) values("fingers", "0");
+insert into game_features(game_name, game_high_score) values("Fingers", "0");
 insert into game_features(game_name, game_high_score) values("2048", "0");
 insert into game_features(game_name, game_high_score) values("Breakout", "0");
 insert into game_features(game_name, game_high_score) values("Delta Masters", "0");
