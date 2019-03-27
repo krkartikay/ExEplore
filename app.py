@@ -11,7 +11,7 @@ import base64
 import datetime
 import time
 
-ALLOWED_TIME_SECONDS = 10 * 60
+ALLOWED_TIME_SECONDS = 20 * 60
 
 def get_time_rem():
 	return int(ALLOWED_TIME_SECONDS - (time.time() - session['time']))
@@ -25,7 +25,7 @@ def authorise(f):
 				session['time'] = user.initial_login
 			if session['time'] != 0:
 				if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
-					session.pop("user_id")
+					# session.pop("user_id")
 					abort(504)
 			return f(*args, **kwargs)
 		else:
@@ -140,7 +140,6 @@ def login():
 # 	session["start"] = True
 # 	return redirect(url_for("dashboard"))
 @app.route("/logout/")
-@authorise
 def logout():
 	session.pop("roll_number", None)
 	session.pop("user_id", None)
@@ -245,7 +244,8 @@ def new_score():
 		user_score = request.json['score']
 	except:
 		user_score = int(float(request.form['score']))
-		
+	if game.game_id == 3:
+		user_score = 100/user_score
 	if game.high_score < user_score:
 		game.high_score = user_score
 	if game_features.game_high_score<user_score:
