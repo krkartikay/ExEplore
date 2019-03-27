@@ -98,14 +98,16 @@ def login():
 @app.route("/logout/")
 @authorise
 def logout():
-    session.pop("roll_number", None)
-    session.pop("user_id", None)
-    session.pop("logged_in", False)
-    return redirect("/")
+	session.pop("roll_number", None)
+	session.pop("user_id", None)
+	session.pop("logged_in", False)
+	session.pop("type", None)
+	return redirect(url_for("welcome"))
 
-@app.route("/profile/<int:user_id>")
+@app.route("/profile/")
 @authorise
-def profile(user_id):
+def profile():
+	user_id = session["user_id"]
 	user = User.query.filter_by(user_id = user_id).first()
 	record = Game.query.filter_by(user_id = user_id).join(GameFeature).order_by(Game.game_id.asc()).all()
 	return render_template("profile.html", user = user, record = record)
