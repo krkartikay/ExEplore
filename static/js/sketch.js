@@ -56,7 +56,11 @@ function draw() {
         if (pipes[i].offscreen()) {
             pipes.splice(i, 1);
         }
-        score++
+        score++;
+        if (score % 1000 == 0) {
+            speed += 1;
+            console.log(speed);
+        }
     }
     player.show();
 

@@ -8,6 +8,7 @@ from passlib.hash import sha256_crypt
 from functools import wraps
 import os
 import base64
+import datetime
 
 def authorise(f):
 	@wraps(f)
@@ -27,7 +28,8 @@ def welcome():
 def dashboard():
 	user = User.query.filter_by(user_id = session['user_id']).first()
 	games = GameFeature.query.all()
-	return render_template("dashboard.html", user = user, games = games)
+	# print(session["start"])
+	return render_template("dashboard.html", user = user, games = games, start =session["start"])
 
 @app.route("/register/", methods = ["GET", "POST"])
 def register():
@@ -102,9 +104,22 @@ def login():
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
 				session["type"] = "user";
+				# session["start"] = False;
 		flash("Successfully logged in!")
 		return redirect(url_for("dashboard"))
 
+
+# @app.route("/api/start", methods=["GET"])
+# def start_game():
+# 	user = User.query.filter_by(user_id = session['user_id'])
+# 	print(user)
+# 	user.start_time = str(datetime.datetime.now())
+# 	# if user.date_time != '0':
+# 	# 	abort(401)
+# 	# else:
+# 	# db.session.commit()
+# 	session["start"] = True
+# 	return redirect(url_for("dashboard"))
 @app.route("/logout/")
 @authorise
 def logout():
@@ -136,7 +151,7 @@ def leaderboard():
 		for userid, rollno, game, relative in users:
 			if userid not in data:
 				data[userid] = {}
-			print(userid,rollno,game,relative)
+			# print(userid,rollno,game,relative)
 			if relative is not None:
 				data[userid][game] = relative
 			else:
@@ -168,15 +183,15 @@ def game(game_id):
 	user_id = session['user_id']
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
-	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
-		game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
-	else:
-		game = Game(user_id = user_id,
-					game_id = game_id,
-					high_score = 0
-					)
-		db.session.add(game)
-		db.session.commit()
+	# if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
+	game = Game.query.filter_by(user_id=user_id, game_id=game_id).first()
+	# else:
+	# 	game = Game(user_id = user_id,
+	# 				game_id = game_id,
+	# 				high_score = 0
+	# 				)
+	# 	db.session.add(game)
+	# 	db.session.commit()
 	token = os.urandom(16)
 	token = base64.b64encode(token)
 	token = token.decode()
@@ -209,5 +224,5 @@ def new_score():
 	if game_features.game_high_score<user_score:
 		game_features.game_high_score = user_score
 	db.session.commit()
-	session.pop("sid")
+	# session.pop("sid")
 	return jsonify({'success': True})

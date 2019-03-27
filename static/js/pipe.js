@@ -4,7 +4,6 @@ function Pipe() {
   this.right =  (this.left + this.spacing);
   this.w = 80;
   this.y = -this.w;
-  this.speed = 6;
   this.highlight = false;
 
   this.hits = function(bird) {
@@ -29,7 +28,7 @@ function Pipe() {
   }
 
   this.update = function() {
-    this.y += this.speed; 
+    this.y += speed; 
   }
 
   this.offscreen = function() {
