@@ -19,7 +19,7 @@ function Player() {
 
 
 function setup() {
-    createCanvas(innerWidth*3/5, innerHeight*4/5);
+    createCanvas(innerWidth, innerHeight);
     player= new Player();
     pipes.push(new Pipe());
     frameRate(60)

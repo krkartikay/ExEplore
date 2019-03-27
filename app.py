@@ -9,11 +9,20 @@ from functools import wraps
 import os
 import base64
 import datetime
+import time
+
+ALLOWED_TIME_SECONDS = 30
 
 def authorise(f):
 	@wraps(f)
 	def decorated_f(*args, **kwargs):
 		if "user_id" in session and session["user_id"] != None:
+			if "time" not in session:
+				user = User.query.filter_by(user_id=session["user_id"]).first()
+				session['time'] = user.initial_login
+			if session['time'] != 0:
+				if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
+					abort(401, "TIME OVER")
 			return f(*args, **kwargs)
 		else:
 			abort(401)
@@ -103,8 +112,14 @@ def login():
 				session["roll_number"] = user.roll_number
 				session["user_id"] = user.user_id
 				session["logged_in"] = True
-				session["type"] = "user";
-				# session["start"] = False;
+				session["type"] = "user"
+				if user.initial_login == 0:
+					user.initial_login = int(time.time())
+					session["time"] = user.initial_login
+					db.session.commit()
+				else:
+					session["time"] = user.initial_login
+				# session["start"] = False
 		flash("Successfully logged in!")
 		return redirect(url_for("dashboard"))
 
@@ -169,9 +184,11 @@ def leaderboard_page():
 		session.pop("sid") 
 	return render_template("leaderboard.html")
 
-@app.route("/game/<int:game_id>")
+@app.route("/game_frame/<int:game_id>")
 @authorise
-def game(game_id):
+def game_frame(game_id):
+	if time.time() - session['time_page'] > 5:
+		abort(401)
 	user_id = session['user_id']
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
@@ -194,6 +211,13 @@ def game(game_id):
 	# print game.s_id, game.user_id, game.game_id
 	return render_template("game"+str(game.game_id)+".html", game=game, token = token)
 
+
+@app.route("/game/<int:game_id>")
+@authorise
+def game(game_id):
+	session['time_page'] = time.time()
+	name = GameFeature.query.filter_by(game_id=game_id).first().game_name
+	return render_template("gamepage.html", game_id=game_id, name=name)
 
 @app.route("/api/newscore", methods=["POST"])
 @authorise

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{name}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+        integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style>
+    body {
+        background-color: #080808;
+        color: #fff;
+        height: 100%;
+        width: 100%;
+    }
+    html {
+        height: 100%;
+        width: 100%;
+    }
+    iframe {
+        width: 100%;
+    }
+    .navbar {
+        margin-bottom: 0px;
+        margin-top: 0px;
+    }
+</style>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">EXEplore</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li class="active"><a href="#">Games &gt; {{name.upper()}}</a></li>
+                <li><a href="/leaderboard">Leaderboard</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/profile"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <!-- <h1>{{name}}</h1> -->
+    <script>
+        var flag = !1; function lx() { flag ? (alert("Game Over!"), window.location.href = "/leaderboard") : flag = !0 } $(function () { $("#frm").height($("body").height() - 61); $("#frm")[0].contentWindow.location.href = "/game_frame/{{game_id}}", $("#frm").focus() }); var devtools = /./; function checkFocus() { devtools.opened && (alert("Cannot open console window!"), window.location.href = "/dashboard") } devtools.toString = function () { this.opened = !0 }, console.log("%c", devtools), window.setInterval(checkFocus, 1e3);
+    </script>
+    <iframe frameborder="1" onload="lx()" id="frm">
+    </iframe>
+</body>
+
+</html>
