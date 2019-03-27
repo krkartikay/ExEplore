@@ -129,8 +129,9 @@ def leaderboard():
 	finaldata = list()
 	data = dict()
 	with db.engine.connect() as con:
-		topusers = con.execute("select user_id, sum(high_score/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
-		users = con.execute("select games.user_id, roll_number , game_name, high_score/(game_high_score+1) as relative from games natural join game_features natural join users")
+		topusers = con.execute(
+			"select user_id, sum(high_score*100/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
+		users = con.execute("select games.user_id, roll_number , game_name, high_score/(game_high_score+1)*100 as relative from games natural join game_features natural join users")
 		rollnos = dict()
 		for userid, rollno, game, relative in users:
 			if userid not in data:
