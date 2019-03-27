@@ -7,7 +7,8 @@
 	<link rel="stylesheet" type="text/css" href="../../static/vendor/bootstrap/css/bootstrap.css">
 	<title>2048</title>
 </head>
-<script>var sid ={{ game.s_id}}</script>
+	<script>var sid = {{ game.s_id }}; console.log(sid);</script>
+	<script>var token = "{{ token }}"</script>
 <body style="font-family: sans-serif;">
 	<div class="contain">
 		<div class="leftpane">
@@ -44,10 +45,12 @@
 					<h4 class="modal-title">Instructions</h4>
 				</div>
 				<div class="modal-body">
-					<p>The game's objective is to slide numbered tiles on a grid to combine them to create a tile with the number
+					<p>The game's objective is to slide numbered tiles on a grid to combine them to create a tile with
+						the number
 						2048. However you can keep playing the game creating tiles with larger numbers.</p>
 					<p>Tiles will slide smoothly when a player moves them using the four arrow keys.</p>
-					<p> Every turn, a new tile will randomly appear in an empty spot on the board with a value of either 2 or 4.
+					<p> Every turn, a new tile will randomly appear in an empty spot on the board with a value of either
+						2 or 4.
 					</p>
 				</div>
 				<div class="modal-footer">

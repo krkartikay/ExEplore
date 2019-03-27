@@ -19,7 +19,7 @@ function Player() {
 
 
 function setup() {
-    createCanvas(innerWidth, innerHeight);
+    createCanvas(innerWidth*3/5, innerHeight*4/5);
     player= new Player();
     pipes.push(new Pipe());
     frameRate(60)
@@ -38,11 +38,11 @@ function draw() {
 
         if (pipes[i].hits(player)) {
             console.log(score);
-            var data={'score' : score};
+            var data={'score' : score, 'tokens':token};
             // data['score']=score;
             $.ajax({
                 type: "POST",
-                url: "/api/newscore/"+sid,
+                url: "/api/newscore",
                 data: JSON.stringify(data),
                 contentType: 'application/json;charset=UTF-8',
                 success: function (result) {

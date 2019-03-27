@@ -7,6 +7,7 @@ from models.GameFeature import *
 from passlib.hash import sha256_crypt
 from functools import wraps
 import os
+import base64
 
 def authorise(f):
 	@wraps(f)
@@ -104,12 +105,16 @@ def leaderboard():
 	data = dict()
 	with db.engine.connect() as con:
 		topusers = con.execute("select user_id, sum(high_score/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
-		users = con.execute("select games.user_id, roll_number , game_name, high_score/game_high_score as relative from games natural join game_features natural join users")
+		users = con.execute("select games.user_id, roll_number , game_name, high_score/(game_high_score+1) as relative from games natural join game_features natural join users")
 		rollnos = dict()
 		for userid, rollno, game, relative in users:
 			if userid not in data:
 				data[userid] = {}
-			data[userid][game] = relative
+			print(userid,rollno,game,relative)
+			if relative is not None:
+				data[userid][game] = relative
+			else:
+				data[userid][game] = 0
 			rollnos[userid] = rollno
 		for user, total in topusers:
 			finaldata.append((user, total, data[user]))
@@ -123,17 +128,18 @@ def leaderboard_page():
 		session.pop("sid") 
 	return render_template("leaderboard.html")
 
-@app.route("/api/getsid")
-@authorise
-def get_sid():
-	if "sid" in session:
-		return jsonify({"sid": session['sid']})
-	else:
-		return jsonify({"sid": None})
+# @app.route("/api/get_token")
+# @authorise
+# def get_token():
+# 	if "sid" in session:
+# 		return jsonify({"sid": session['sid']})
+# 	else:
+# 		return jsonify({"sid": None})
 
-@app.route("/game/<int:user_id>/<int:game_id>")
+@app.route("/game/<int:game_id>")
 @authorise
-def game(user_id,  game_id):
+def game(game_id):
+	user_id = session['user_id']
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())
 	if len(Game.query.filter_by(user_id=user_id, game_id=game_id).all()) != 0:
@@ -147,25 +153,35 @@ def game(user_id,  game_id):
 		db.session.commit()
 	token = os.urandom(16)
 	token = base64.b64encode(token)
-	token = token.encode()
+	token = token.decode()
 	session["sid"]=game.s_id
 	session["token"] = token
-	print(session["sid"])
+	print(session["token"])
 	# print game.s_id, game.user_id, game.game_id
 	return render_template("game"+str(game.game_id)+".html", game=game, token = token)
 
 
-@app.route("/api/newscore/<int:s_id>", methods=["POST"])
+@app.route("/api/newscore", methods=["POST"])
 @authorise
-def new_score(s_id):
-	# print s_id
+def new_score():
+	try:
+		tokens = request.json['tokens']
+	except:
+		tokens = request.data['tokens']
+	if tokens != session["token"]:
+		abort(401)
+	s_id = session["sid"]
 	game = Game.query.filter_by(s_id=s_id).first()
-	# print game.s_id
-	# print request.json['score']
 	game_features = GameFeature.query.filter_by(game_id= game.game_id).first()
-	if game.high_score < request.json['score']:
-		game.high_score = request.json['score']
-	if game_features.game_high_score<request.json['score']:
-		game_features.game_high_score = request.json['score']
+	try:
+		user_score = request.json['score']
+	except:
+		user_score = request.data['score']
+		
+	if game.high_score < user_score:
+		game.high_score = user_score
+	if game_features.game_high_score<user_score:
+		game_features.game_high_score = user_score
 	db.session.commit()
+	session.pop("sid")
 	return jsonify({'success': True})

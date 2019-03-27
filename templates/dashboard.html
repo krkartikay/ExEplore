@@ -213,7 +213,7 @@
                             <center>{{game.game_name}}</center>
                         </div>
                         <div style="font-size: 2em; position: relative;">
-                            <center><a href="{{url_for('game',user_id = user.user_id,game_id=(games.index(game)+1))}}"><i class="fa fa-gamepad fa-5x" aria-hidden="true"></i></a></center>
+                            <center><a href="{{url_for('game',game_id=(games.index(game)+1))}}"><i class="fa fa-gamepad fa-5x" aria-hidden="true"></i></a></center>
                         </div>                    
                 </div>
                 {% endfor %}

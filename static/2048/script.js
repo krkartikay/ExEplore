@@ -311,10 +311,10 @@ function finishGame() {
     loss = true;
   });
   console.log(sc);
-  var data = { 'score': sc };
+  var data = {'score': sc,'tokens': token };
   $.ajax({
     type: "POST",
-    url: "/api/newscore/" + sid,
+    url: "/api/newscore",
     data: JSON.stringify(data),
     contentType: 'application/json;charset=UTF-8',
     success: function (result) {
