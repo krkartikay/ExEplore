@@ -22,20 +22,10 @@ high_score int not null,
 foreign key(user_id) references users(user_id),
 foreign key(game_id) references game_features(game_id));
 
-insert into users(roll_number, password, first_name, last_name, phone_number) values('admin', '$5$rounds=535000$HMnXf5En.04mpgc8$MT3.2Lo8yr8OXGpcz3opnzao30dB96KvS6tzhwxPp5.', 'admin', 'admin', 'xxxxxxxxxx');
-
-insert into game_features(game_name, game_high_score) values("Fingers", "0");
+insert into game_features(game_name, game_high_score) values("Hurdles", "0");
 insert into game_features(game_name, game_high_score) values("2048", "0");
 insert into game_features(game_name, game_high_score) values("Breakout", "0");
 insert into game_features(game_name, game_high_score) values("Delta Masters", "0");
 insert into game_features(game_name, game_high_score) values("Bubble Trouble", "0");
 insert into game_features(game_name, game_high_score) values("Escape The Gravity", "0");
 insert into game_features(game_name, game_high_score) values("Pic Puzzle", "0");
-
-insert into games(game_id, user_id, high_score) values(1, 1, 0);
-insert into games(game_id, user_id, high_score) values(2, 1, 0);
-insert into games(game_id, user_id, high_score) values(3, 1, 0);
-insert into games(game_id, user_id, high_score) values(4, 1, 0);
-insert into games(game_id, user_id, high_score) values(5, 1, 0);
-insert into games(game_id, user_id, high_score) values(6, 1, 0);
-insert into games(game_id, user_id, high_score) values(7, 1, 0);

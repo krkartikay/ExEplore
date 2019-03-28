@@ -311,7 +311,7 @@ function finishGame() {
     loss = true;
   });
   console.log(sc);
-  var data = {'score': sc,'tokens': token };
+  var data = {'score': sc,'tokens': i_tl1 };
   $.ajax({
     type: "POST",
     url: "/api/newscore",

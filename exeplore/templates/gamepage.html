@@ -57,22 +57,16 @@
     <!-- <h1>{{name}}</h1> -->
     <iframe frameborder="1" id="frm">
     </iframe>
+    <script src="/static/dvdetect.js"></script>
     <script>
-    var flag = !1;
-
         $(function () {
-            // $("#frm").on('load', function (evt) { alert(evt.target.src); if (evt.target.src); });
             $("#frm").height($("body").height() - 61);
             $("#frm")[0].contentWindow.location.href = "/game_frame/{{game_id}}", $("#frm").focus()
         });
-        var devtools = /./;
-
         function checkFocus() {
-            // devtools.opened && (alert("Cannot open console window!"), window.location.href = "/dashboard")
+            devtools.open && (alert("It is not allowed to open the console window!"), window.location.href = "/dashboard")
         }
-        devtools.toString = function () {
-            this.opened = !0
-        }, console.log("%c", devtools), window.setInterval(checkFocus, 1e3);
+        window.setInterval(checkFocus, 1e3);
     </script>
     
 </body>

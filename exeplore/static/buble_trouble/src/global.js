@@ -210,7 +210,7 @@ function timing()
 function gameOver() {
     // alert( 'Game over!'+score.coins );
     console.log(score.coins);
-    var data = { 'score': score.coins, 'tokens': token };
+    var data = { 'score': score.coins, 'tokens': i_tl1 };
     // data['score']=score;
     $.ajax({
         type: "POST",

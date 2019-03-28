@@ -9,7 +9,7 @@
     <script src="../../static/Breakout3D/TemplateData/UnityProgress.js"></script>
     <script src="../../static/Breakout3D/Build/UnityLoader.js"></script>
     <script>
-      var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/Breakout3D/Build/webgl2.json", { onProgress: UnityProgress }); setInterval(() => { gameInstance.SendMessage("GameManger", "ctrl", "{{ token }}") }, 1e3);
+      var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/Breakout3D/Build/webgl2.json", { onProgress: UnityProgress }); setInterval(() => { gameInstance.SendMessage("GameManger", "ctrl", "{{ token }}") }, 5e3);
     </script>
   </head>
   <body>

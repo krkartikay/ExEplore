@@ -9,7 +9,7 @@
     <script src="../../static/etg/TemplateData/UnityProgress.js"></script>  
     <script src="../../static/etg/Build/UnityLoader.js"></script>
     <script>
-		  var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/etg/Build/webGL.json", { onProgress: UnityProgress }); setInterval(() => { gameInstance.SendMessage("Main Camera", "ctrl", "{{ token }}") }, 1e3);
+		  var gameInstance = UnityLoader.instantiate("gameContainer", "../../static/etg/Build/webGL.json", { onProgress: UnityProgress }); setInterval(() => { gameInstance.SendMessage("Main Camera", "ctrl", "{{ token }}") }, 5e3);
     </script>
   </head>
   <body>
