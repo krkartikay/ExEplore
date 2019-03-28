@@ -64,7 +64,7 @@
                         response['games'].forEach(gamename => {
                             rowdata += "<td>" + data[3][gamename] + "</td>";
                         });
-                        rowdata += "<td>" + data[2] + "</td>";
+                        rowdata += "<td>" + Math.floor(data[2]/6 *100)/100 + "</td>";
                         $("#tb1").append("<tr>" + rowdata + "</tr>");
                     });
                 }
