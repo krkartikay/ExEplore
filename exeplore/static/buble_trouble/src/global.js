@@ -219,7 +219,7 @@ function gameOver() {
         contentType: 'application/json;charset=UTF-8',
         success: function (result) {
             console.log(result);
-            window.location.href = "http://127.0.0.1:5000/leaderboard";
+            window.location.href = "/leaderboard";
         }
     });
 }
