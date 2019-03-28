@@ -440,7 +440,7 @@ Delta = function () {
             console.log(result);
             window.location.href = "/leaderboard";
           }
-        }); document.location.reload();
+        });
         clearInterval(interval);
         setTimeout(engine.quit.bind(engine), 4000);
       }
