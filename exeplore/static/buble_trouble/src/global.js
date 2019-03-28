@@ -1,6 +1,6 @@
 //#################################GAME CANVAS $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-const GAME_WIDTH = 1200*0.6;
-const GAME_HEIGHT = 620*0.6;
+const GAME_WIDTH = 1200;
+const GAME_HEIGHT = 620;
 var canvas = document.getElementById("gameScreen");
 var ctx = canvas.getContext("2d");
 var game_continue = true;
@@ -8,7 +8,7 @@ var game_continue = true;
 //#####################################GAME VARIABLE $$$$$$$$$$$$$$$$$$$$$$$$$$
 var GROUND_H = 0,
     PLAYER_W = 30, PLAYER_H = 90;
-var W = 1200*0.6, H = 620*0.6;
+var W = 1200, H = 620;
 var PLAYER_SIZE_H = PLAYER_H / (H - GROUND_H),
     PLAYER_SIZE_W = PLAYER_W / W,
     PLAYER_SPEED = 0.005,
