@@ -30,6 +30,7 @@ insert into game_features(game_name, game_high_score) values("Breakout", "0");
 insert into game_features(game_name, game_high_score) values("Delta Masters", "0");
 insert into game_features(game_name, game_high_score) values("Bubble Trouble", "0");
 insert into game_features(game_name, game_high_score) values("Escape The Gravity", "0");
+insert into game_features(game_name, game_high_score) values("Pic Puzzle", "0");
 
 insert into games(game_id, user_id, high_score) values(1, 1, 0);
 insert into games(game_id, user_id, high_score) values(2, 1, 0);
@@ -37,3 +38,4 @@ insert into games(game_id, user_id, high_score) values(3, 1, 0);
 insert into games(game_id, user_id, high_score) values(4, 1, 0);
 insert into games(game_id, user_id, high_score) values(5, 1, 0);
 insert into games(game_id, user_id, high_score) values(6, 1, 0);
+insert into games(game_id, user_id, high_score) values(7, 1, 0);
