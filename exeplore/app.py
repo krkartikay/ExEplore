@@ -197,11 +197,19 @@ def leaderboard_page():
 	print(logged_in)
 	return render_template("leaderboard.html", timer=get_time_rem(), logged_in = logged_in)
 
+
 @app.route("/game_frame/<int:game_id>")
 @authorise
-def game_frame(game_id):
+def game_help(game_id):
 	if time.time() - session['time_page'] > 5:
 		abort(401)
+	if game_id in [2, 3, 4, 6, 7]:
+		return redirect("/game_actual/"+str(game_id))
+	return render_template("game_rules"+str(game_id)+".html")
+
+@app.route("/game_actual/<int:game_id>")
+@authorise
+def game_frame(game_id):
 	user_id = session['user_id']
 	# print user_id,game_id
 	# print len(Game.query.filter_by(user_id = user_id , game_id =game_id).all())

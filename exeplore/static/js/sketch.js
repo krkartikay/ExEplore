@@ -38,7 +38,7 @@ function draw() {
 
         if (pipes[i].hits(player)) {
             console.log(score);
-            var data={'score' : score, 'tokens':i_tl1};
+            var data={'score' : score, 'tokens':token};
             // data['score']=score;
             $.ajax({
                 type: "POST",

@@ -429,7 +429,7 @@ Delta = function () {
       if (!this.lives) {
         var sc = this.score;
         console.log(sc)
-        var data = { 'score': sc, 'tokens': i_tl1 };
+        var data = { 'score': sc, 'tokens': token };
         // data['score']=score;
         jQuery.ajax({
           type: "POST",
