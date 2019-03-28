@@ -11,25 +11,28 @@
         integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<style>
-    body {
-        background-color: #080808;
-        color: #fff;
-        height: 100%;
-        width: 100%;
-    }
-    html {
-        height: 100%;
-        width: 100%;
-    }
-    iframe {
-        width: 100%;
-    }
-    .navbar {
-        margin-bottom: 0px;
-        margin-top: 0px;
-    }
-</style>
+    <style>
+        body {
+            background-color: #080808;
+            color: #fff;
+            height: 100%;
+            width: 100%;
+        }
+
+        html {
+            height: 100%;
+            width: 100%;
+        }
+
+        iframe {
+            width: 100%;
+        }
+
+        .navbar {
+            margin-bottom: 0px;
+            margin-top: 0px;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,11 +55,11 @@
         </div>
     </nav>
     <!-- <h1>{{name}}</h1> -->
+    <iframe frameborder="1" id="frm">
+    </iframe>
     <script>
         var flag = !1; function lx() { flag ? (alert("Game Over!"), window.location.href = "/leaderboard") : flag = !0 } $(function () { $("#frm").height($("body").height() - 61); $("#frm")[0].contentWindow.location.href = "/game_frame/{{game_id}}", $("#frm").focus() }); var devtools = /./; function checkFocus() { devtools.opened && (alert("Cannot open console window!"), window.location.href = "/dashboard") } devtools.toString = function () { this.opened = !0 }, console.log("%c", devtools), window.setInterval(checkFocus, 1e3);
     </script>
-    <iframe frameborder="1" onload="lx()" id="frm">
-    </iframe>
 </body>
 
 </html>

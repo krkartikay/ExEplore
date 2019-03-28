@@ -44,6 +44,7 @@
                         <tr>\
                         <th>Rank</th>\
                         <th>Rollno</th>\
+                        <th>Name</th>\
                         </tr >\
                         </table>\
                     ");
@@ -59,10 +60,11 @@
                         rowdata += "<td>" + pos + "</td>";
                         pos += 1;
                         rowdata += "<td>" + rollno + "</td>";
-                        response['games'].forEach(gamename => {
-                            rowdata += "<td>" + data[2][gamename] + "</td>";
-                        });
                         rowdata += "<td>" + data[1] + "</td>";
+                        response['games'].forEach(gamename => {
+                            rowdata += "<td>" + data[3][gamename] + "</td>";
+                        });
+                        rowdata += "<td>" + data[2] + "</td>";
                         $("#tb1").append("<tr>" + rowdata + "</tr>");
                     });
                 }

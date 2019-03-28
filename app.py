@@ -11,7 +11,7 @@ import base64
 import datetime
 import time
 
-ALLOWED_TIME_SECONDS = 20 * 60
+ALLOWED_TIME_SECONDS = 200 * 60
 
 def get_time_rem():
 	return int(ALLOWED_TIME_SECONDS - (time.time() - session['time']))
@@ -162,8 +162,8 @@ def leaderboard():
 	data = dict()
 	with db.engine.connect() as con:
 		topusers = con.execute(
-			"select user_id, sum(high_score*100/game_high_score) as total from games natural join game_features group by user_id order by total desc;")
-		users = con.execute("select games.user_id, roll_number , game_name, high_score/(game_high_score+1)*100 as relative from games natural join game_features natural join users")
+			"select user_id, first_name, last_name, sum(high_score*100/game_high_score) as total from games natural join game_features natural join users group by user_id order by total desc;")
+		users = con.execute("select games.user_id, roll_number , game_name, high_score as relative from games natural join game_features natural join users")
 		rollnos = dict()
 		for userid, rollno, game, relative in users:
 			if userid not in data:
@@ -174,21 +174,25 @@ def leaderboard():
 			else:
 				data[userid][game] = 0
 			rollnos[userid] = rollno
-		for user, total in topusers:
-			finaldata.append((user, total, data[user]))
+		for user, first_name, last_name, total in topusers:
+			finaldata.append((user, first_name+" "+last_name, total, data[user]))
 		games = con.execute("select game_name from game_features")
-	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata},) #render_template("") 
+	return jsonify({'games': [x[0] for x in games], 'rollnos': rollnos , 'leader_data': finaldata},)
 
 @app.route("/leaderboard/")
 def leaderboard_page():
 	logged_in = True
-	if session['time'] != 0:
-		if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
-			logged_in = False
 	if 'user_id' not in session:
 		logged_in = False
 	elif session['user_id'] == None:
 		logged_in = False
+	else:
+		if "time" not in session:
+			user = User.query.filter_by(user_id=session["user_id"]).first()
+			session['time'] = user.initial_login
+		if session['time'] != 0:
+			if time.time() - session['time'] > ALLOWED_TIME_SECONDS:
+				logged_in = False
 	print(logged_in)
 	return render_template("leaderboard.html", timer=get_time_rem(), logged_in = logged_in)
 
