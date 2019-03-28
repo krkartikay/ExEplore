@@ -11,7 +11,7 @@ import base64
 import datetime
 import time
 
-ALLOWED_TIME_SECONDS = 200 * 60
+ALLOWED_TIME_SECONDS = 3 * 60 * 60 # 3 hours
 
 def get_time_rem():
 	return int(ALLOWED_TIME_SECONDS - (time.time() - session['time']))
