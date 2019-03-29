@@ -258,7 +258,9 @@ def new_score():
 	except:
 		user_score = int(float(request.form['score']))
 	if game.game_id == 3:
-		user_score = 100/user_score
+		user_score = max(60 - user_score, 0)
+	if game.game_id == 7:
+		user_score = max(200 - user_score, 0)
 	if game.high_score < user_score:
 		game.high_score = user_score
 	if game_features.game_high_score<user_score:
