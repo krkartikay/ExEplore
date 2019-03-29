@@ -201,7 +201,7 @@ def leaderboard_page():
 @app.route("/game_frame/<int:game_id>")
 @authorise
 def game_help(game_id):
-	if time.time() - session['time_page'] > 5:
+	if time.time() - session['time_page'] > 2:
 		abort(401)
 	if game_id in [2, 3, 4, 6, 7]:
 		return redirect("/game_actual/"+str(game_id))
