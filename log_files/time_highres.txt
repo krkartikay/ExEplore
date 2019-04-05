@@ -1,0 +1,164 @@
+11:10 xxxx
+11:20 xxxxxxxxxx
+00:00 xxxxxxxxx
+00:10 xxxxxxxxxxx
+00:20 xxxxxxxxx
+00:30 xxxxxxxxxxxxxx
+00:40 xxxxxxxxxxxxxx
+00:50 xxxxxxxxxxx
+01:00 xxxxxxxxxxxxxxxxxx
+01:10 xxxxxxxxxxxxxxxx
+01:20 xxxxxxxxxxxxxxx
+01:30 xxxxxxx
+01:40 xxxxxxxxx
+01:50 xxxxxxxxxxxxx
+02:00 xxxxxxxxxxxxxxxx
+02:10 xxxxxxxxxxxxxxx
+02:20 xxxxxxxxxxxxxx
+02:30 xxxxxxxxxxxxxxxxx
+02:40 xxxxxxxxxxxxxxxxxxxxxx
+02:50 xxxxxxxxxxxxxxxxxxxxxx
+03:00 xxxxxxxxxxxxxxx
+03:10 xxxxxxxxxxxx
+03:20 xxxxxxxxxxxx
+03:30 xxxxxxxxxxxx
+03:40 xxxxxxxxxx
+03:50 xxxxxxxxxxx
+04:00 xxxxxxxxxxxxxxxxxxx
+04:10 xxxxxxxxxxxxx
+04:20 xxxxxxxxxxxxxxx
+04:30 xxxxxxxxxxxxxxxxxxx
+04:40 xxxxxxxxxxxxxxxxxxxxxxxxx
+04:50 xxxxxxxxxxxxxxxxxxxxxx
+05:00 xxxxxxxxxx
+05:10 xxxxxxx
+05:20 xxxxxxxxxx
+05:30 xxxxxxxxx
+05:40 xxxxxxxxxxxxxxx
+05:50 xxxxxxxxxxx
+06:00 xxxxx
+06:10 xxx
+06:20 xxxxxx
+06:30 xxxxxxxxxxx
+06:40 xxxxxxxx
+06:50 xxxxxxx
+07:00 xxxx
+07:10 xxx
+07:20 xxx
+07:30 xxxxxx
+07:40 xxxxxx
+07:50 xxxxxx
+08:00 xx
+08:10 xxxxx
+08:20 xxxxxxxx
+08:30 xxxxx
+08:40 xx
+08:50 xx
+09:00 xxx
+09:10 xxxx
+09:20 xxxxx
+09:30 xxxxxxxxx
+09:40 xxxxxx
+09:50 xxxx
+10:00 xxxxxxx
+10:10 xxxxxxxxx
+10:20 xxxxxxx
+10:30 xxxxxxxxx
+10:40 xxxxxxxxx
+10:50 xxxxxxx
+11:00 xxxxxxxx
+11:10 xxxxxxxxxx
+11:20 xxxxxxxxxxxxxxx
+11:30 xxxxxxxxx
+11:40 xxxxxxxxxx
+11:50 xxxxxxxxxx
+00:00 xxxxxxxxxxxxx
+00:10 xxxxxxxxxx
+00:20 xxxxxxxx
+00:30 xxxxxxxxxxxxx
+00:40 xxxxxxxxxxxx
+00:50 xxxxxxxxxxxxxx
+01:00 xxx
+01:10 xxx
+01:20 xxxxx
+01:30 xxxxxxx
+01:40 xxxxxxx
+01:50 xxx
+02:00 xx
+02:10 x
+02:20 xx
+02:30 xxxxxxxxx
+02:40 xxxxxxx
+02:50 xxxx
+03:00 x
+03:10 
+03:20 
+03:30 x
+03:40 
+03:50 
+04:00 x
+04:30 
+04:50 
+05:00 
+05:30 
+06:10 
+06:20 
+06:50 
+07:00 xxxx
+07:10 xxxxx
+07:20 xxxxx
+07:30 xxx
+07:40 xxxx
+07:50 xxxxxx
+08:00 xxxxxx
+08:10 xxxxxxx
+08:20 xxxxxxxxxxx
+08:30 xx
+08:40 xxxxx
+08:50 xxxxxxx
+09:00 xxxxxxxxxxx
+09:10 xxxxxxxxxxx
+09:20 xxxxxxxxxx
+09:30 xxxxxxxxxxxxxxxxx
+09:40 xxxxxxxxx
+09:50 xxxxxxxxx
+10:00 xxxxxxxxxxxxxxxxxxxxxxx
+10:10 xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+10:20 xxxxxxxxxxxxxxxxxxxxxxx
+10:30 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+10:40 xxxxxxxxxxxxxxx
+10:50 xxxxxxxxxxxxxxxxxxxxx
+11:00 xxxxxxxxxxx
+11:10 xxxxxxxxxxxxxxx
+11:20 xxx
+11:30 xxxxxxxxxxxxxxxxxxxxxxxx
+11:40 xxxxxxxxxxxxxxxxxxxxxx
+11:50 xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+00:00 
+00:10 
+00:20 
+00:30 xx
+00:40 x
+00:50 x
+01:00 xx
+01:10 
+01:20 
+01:40 
+01:50 
+02:00 x
+02:10 
+02:20 
+02:30 
+02:40 
+02:50 
+03:00 
+03:10 
+03:40 
+03:50 
+04:00 
+04:10 
+04:20 
+05:00 
+05:20 
+05:30 
+05:50 
