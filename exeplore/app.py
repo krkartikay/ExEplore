@@ -11,6 +11,7 @@ import base64
 import datetime
 import time
 import random
+import simplejson as json
 
 ALLOWED_TIME_SECONDS = 3 * 60 * 60 # 3 hours
 
@@ -77,6 +78,7 @@ def register():
 						last_name = last_name
 					)
 			db.session.add(user)
+			db.session.commit()
 			for game in GameFeature.query.all():
 				user_game = Game(
 					user_id = user.user_id,
@@ -84,8 +86,7 @@ def register():
 					high_score = 0
 				)
 				db.session.add(user_game)
-			db.session.commit()
-			db.session.close()
+				db.session.commit()
 			flash("Successfully registered!")
 			return redirect(url_for("login"))
 		else:
