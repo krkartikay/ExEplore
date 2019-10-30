@@ -14,5 +14,5 @@ $ python3 -m venv venv
 $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
-2) Create mysql database. Use `exeplore/database.txt`.
+2) Create mysql database. All the SQL queries are mentioned in `exeplore/database.txt`.
 3) Use `python exeplore/__init__.py` to run the app.
